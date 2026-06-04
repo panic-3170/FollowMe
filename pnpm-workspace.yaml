@@ -1,0 +1,10 @@
+allowBuilds:
+  '@parcel/watcher': false
+  better-sqlite3: false
+  esbuild: false
+minimumReleaseAgeExclude:
+  - '@nuxt/kit@3.21.7'
+  - '@nuxt/nitro-server@3.21.7'
+  - '@nuxt/schema@3.21.7'
+  - '@nuxt/vite-builder@3.21.7'
+  - nuxt@3.21.7
