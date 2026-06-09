@@ -21,7 +21,8 @@ export default defineNuxtConfig({
       meta: [
         { charset: 'utf-8' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-        { name: 'description', content: '独立开发者 / 全栈工程师 - 个人主页' }
+        { name: 'description', content: '独立开发者 / 全栈工程师 - 个人主页' },
+        { name: 'google-site-verification', content: 'EtV_GxgMJxLvCVNSflYdqaDUdbJWth3INAzEAXko5VQ' }
       ]
     }
   },
