@@ -1,25 +1,30 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
-import { useFetch } from 'nuxt/app'
+import { marked } from 'marked'
 import { ArrowLeft, Clock, Calendar, Tag } from 'lucide-vue-next'
+import { articles } from '~/data/articles'
 
 const route = useRoute()
 const id = route.params.id as string
 
-const { data: article } = await useFetch(`/api/articles/${id}`)
-const { data: allArticles } = await useFetch('/api/articles')
-
-const relatedArticles = computed(() => {
-  if (!article.value || !allArticles.value) return []
-  return allArticles.value
-    .filter((a: any) => a.category === article.value.category && a.id !== id)
-    .slice(0, 3)
-})
+const article = computed(() => articles.find(a => a.id === id))
 
 if (!article.value) {
   throw createError({ statusCode: 404, statusMessage: '文章未找到' })
 }
+
+const htmlContent = computed(() =>
+  article.value ? marked.parse(article.value.content) as string : ''
+)
+
+const relatedArticles = computed(() => {
+  if (!article.value) return []
+  return articles
+    .filter(a => a.category === article.value!.category && a.id !== id)
+    .slice(0, 3)
+    .map(a => ({ ...a, _path: `/writing/${a.id}` }))
+})
 </script>
 
 <template>
@@ -68,7 +73,7 @@ if (!article.value) {
           </div>
         </header>
 
-        <div class="prose prose-lg max-w-none" v-html="article.content"></div>
+        <div class="prose prose-lg max-w-none" v-html="htmlContent"></div>
       </article>
 
       <section v-if="relatedArticles.length > 0" class="mt-16 pt-12 border-t border-gray-200">
@@ -113,115 +118,21 @@ if (!article.value) {
   color: #374151;
   line-height: 1.75;
 }
-
-.prose :deep(h1) {
-  font-size: 2.25rem;
-  font-weight: 600;
-  margin-top: 2rem;
-  margin-bottom: 1rem;
-  line-height: 1.3;
-  color: #111827;
-}
-
-.prose :deep(h2) {
-  font-size: 1.875rem;
-  font-weight: 600;
-  margin-top: 2rem;
-  margin-bottom: 1rem;
-  line-height: 1.3;
-  color: #111827;
-}
-
-.prose :deep(h3) {
-  font-size: 1.5rem;
-  font-weight: 600;
-  margin-top: 1.5rem;
-  margin-bottom: 0.75rem;
-  line-height: 1.4;
-  color: #111827;
-}
-
-.prose :deep(p) {
-  margin-bottom: 1.25rem;
-  line-height: 1.75;
-}
-
-.prose :deep(ul), .prose :deep(ol) {
-  margin-top: 1rem;
-  margin-bottom: 1rem;
-  padding-left: 1.5rem;
-}
-
-.prose :deep(li) {
-  margin-bottom: 0.5rem;
-  line-height: 1.75;
-}
-
-.prose :deep(code) {
-  background-color: #f3f4f6;
-  padding: 0.125rem 0.375rem;
-  border-radius: 0.25rem;
-  font-size: 0.875em;
-  font-family: 'Monaco', 'Menlo', 'Courier New', monospace;
-}
-
-.prose :deep(pre) {
-  background-color: #1f2937;
-  color: #f9fafb;
-  padding: 1rem;
-  border-radius: 0.5rem;
-  overflow-x: auto;
-  margin: 1.5rem 0;
-}
-
-.prose :deep(pre code) {
-  background-color: transparent;
-  padding: 0;
-  color: inherit;
-  font-size: 0.875rem;
-}
-
-.prose :deep(hr) {
-  margin: 2rem 0;
-  border-color: #e5e7eb;
-}
-
-.prose :deep(strong) {
-  font-weight: 600;
-  color: #111827;
-}
-
-.prose :deep(a) {
-  color: #2563eb;
-  text-decoration: underline;
-}
-
-.prose :deep(a:hover) {
-  color: #1d4ed8;
-}
-
-.prose :deep(blockquote) {
-  border-left: 4px solid #e5e7eb;
-  padding-left: 1rem;
-  margin: 1.5rem 0;
-  color: #6b7280;
-  font-style: italic;
-}
-
-.prose :deep(table) {
-  width: 100%;
-  border-collapse: collapse;
-  margin: 1.5rem 0;
-}
-
-.prose :deep(th), .prose :deep(td) {
-  border: 1px solid #e5e7eb;
-  padding: 0.75rem;
-  text-align: left;
-}
-
-.prose :deep(th) {
-  background-color: #f9fafb;
-  font-weight: 600;
-}
+.prose :deep(h1) { font-size: 2.25rem; font-weight: 600; margin-top: 2rem; margin-bottom: 1rem; line-height: 1.3; color: #111827; }
+.prose :deep(h2) { font-size: 1.875rem; font-weight: 600; margin-top: 2rem; margin-bottom: 1rem; line-height: 1.3; color: #111827; }
+.prose :deep(h3) { font-size: 1.5rem; font-weight: 600; margin-top: 1.5rem; margin-bottom: 0.75rem; line-height: 1.4; color: #111827; }
+.prose :deep(p) { margin-bottom: 1.25rem; line-height: 1.75; }
+.prose :deep(ul), .prose :deep(ol) { margin-top: 1rem; margin-bottom: 1rem; padding-left: 1.5rem; }
+.prose :deep(li) { margin-bottom: 0.5rem; line-height: 1.75; }
+.prose :deep(code) { background-color: #f3f4f6; padding: 0.125rem 0.375rem; border-radius: 0.375rem; font-size: 0.875em; font-family: 'Monaco', 'Menlo', 'Courier New', monospace; }
+.prose :deep(pre) { background-color: #1f2937; color: #f9fafb; padding: 1rem; border-radius: 0.5rem; overflow-x: auto; margin: 1.5rem 0; }
+.prose :deep(pre code) { background-color: transparent; padding: 0; color: inherit; font-size: 0.875rem; }
+.prose :deep(hr) { margin: 1.5rem 0; border-color: #e5e7eb; }
+.prose :deep(strong) { font-weight: 600; color: #111827; }
+.prose :deep(a) { color: #2563eb; text-decoration: underline; }
+.prose :deep(a:hover) { color: #1d4ed8; }
+.prose :deep(blockquote) { border-left: 4px solid #e5e7eb; padding-left: 1rem; margin: 1.5rem 0; color: #6b7280; font-style: italic; }
+.prose :deep(table) { width: 100%; border-collapse: collapse; margin: 1.5rem 0; }
+.prose :deep(th), .prose :deep(td) { border: 1px solid #e5e7eb; padding: 0.75rem; text-align: left; }
+.prose :deep(th) { background-color: #f9fafb; font-weight: 600; }
 </style>
