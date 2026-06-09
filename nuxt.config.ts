@@ -8,6 +8,7 @@ export default defineNuxtConfig({
   },
   css: ['~/assets/css/main.css'],
   app: {
+    baseURL: process.env.NUXT_APP_BASE_URL || '/',
     head: {
       title: '王叔走都是上坡 · 独立开发者',
       htmlAttrs: { lang: 'zh-CN' },
