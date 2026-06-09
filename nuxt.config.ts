@@ -1,14 +1,20 @@
 import tailwindcss from '@tailwindcss/vite'
 
+// GitHub Pages 项目页路径：https://<user>.github.io/FollowMe/
+// 切换到自定义域名时改为 '/'
+const BASE_URL = '/FollowMe/'
+
 export default defineNuxtConfig({
   compatibilityDate: '2025-01-01',
   devtools: { enabled: true },
+  ssr: true,
   vite: {
+    base: BASE_URL,
     plugins: [tailwindcss()],
   },
   css: ['~/assets/css/main.css'],
   app: {
-    baseURL: process.env.NUXT_APP_BASE_URL || '/',
+    baseURL: BASE_URL,
     head: {
       title: '王叔走都是上坡 · 独立开发者',
       htmlAttrs: { lang: 'zh-CN' },
