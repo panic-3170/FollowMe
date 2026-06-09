@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://panic-3170.github.io/FollowMe/sitemap.xml
