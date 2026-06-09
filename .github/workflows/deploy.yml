@@ -14,13 +14,17 @@ concurrency:
   group: pages
   cancel-in-progress: false
 
+# Opt into Node 24 for any actions that don't yet declare Node 24 support
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
-      - uses: pnpm/action-setup@v4
+      - uses: pnpm/action-setup@v6
         with:
           version: 9
 
@@ -32,6 +36,8 @@ jobs:
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v5
+        with:
+          enablement: true
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
