@@ -30,7 +30,7 @@ export default defineNuxtConfig({
     preset: 'static',
     prerender: {
       crawlLinks: true,
-      routes: ['/', '/writing', '/404.html', '/sitemap.xml']
+      routes: ['/', '/writing', '/404.html']
     }
   }
 })
