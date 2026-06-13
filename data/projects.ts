@@ -43,29 +43,30 @@ export const projects: Project[] = [
     link: '#',
     github: 'https://github.com/panic-3170/date'
   },
-  {
-    id: 'codesnap',
-    name: 'CodeSnap',
-    icon: Monitor,
-    description: '跨平台代码截图工具，支持多种主题和导出格式',
-    tags: ['Electron', 'Vue', 'Node.js'],
-    status: '开发中',
-    users: '5K+ 下载',
-    fullDescription: 'CodeSnap 是一款专业的代码截图工具，为开发者提供美观、高质量的代码分享图片。支持30+种编程语言的语法高亮，多种主题风格，以及灵活的导出选项。',
+   {
+    id: 'trendradar',
+    name: '趋势雷达',
+    icon: Globe,
+    description: '面向自媒体人与求职者的全网趋势信息聚合导航页',
+    tags: ['Nuxt.js', 'Vue 3', 'Tailwind CSS'],
+    status: '已上线',
+    users: '公开访问',
+    fullDescription: '趋势雷达（TrendRadar）是一个轻量级的全网趋势信息聚合导航页，通过 7 大分类整合 30+ 精选站点，让用户每天 30 分钟内吃透全网趋势，告别在数十个平台之间来回跳转的低效。',
     features: [
-      '支持30+种编程语言的语法高亮',
-      '10+种精美主题，支持自定义主题',
-      '多种导出格式（PNG, SVG, PDF）',
-      '可调整窗口样式、字体和间距',
-      '快捷键操作，提升工作效率',
-      '代码片段管理和收藏功能'
+      '7 大分类聚合 30+ 精选站点（Reddit 生态、趋势监控、产品与技术、深度内容、数据分析、社媒聚合、中文聚合）',
+      '智能搜索，快速定位目标站点',
+      '一键收藏常用站点，搭建个人常用导航',
+      '深色模式，自动跟随系统主题',
+      '响应式设计，完美适配桌面与移动设备',
+      '中英文双语支持，自由切换'
     ],
     techStack: [
-      { category: '框架', items: ['Electron', 'Vue 3', 'Vite', 'Pinia'] },
-      { category: '核心功能', items: ['Highlight.js', 'html2canvas', 'FileSaver.js'] },
-      { category: '构建工具', items: ['TypeScript', 'SCSS', 'ESLint'] }
+      { category: '前端', items: ['Nuxt.js 3', 'Vue 3', 'Tailwind CSS'] },
+      { category: '部署', items: ['GitHub Pages'] },
+      { category: '分析', items: ['51.la', 'Google Analytics'] }
     ],
-    github: 'https://github.com/example/codesnap'
+    link: 'https://www.apppss.com',
+    github: 'https://github.com/panic-3170/TrendRadar'
   },
   {
     id: 'webflow',

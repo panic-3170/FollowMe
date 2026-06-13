@@ -1,24 +1,20 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
-import { useFetch } from 'nuxt/app'
 import { Clock, Tag } from 'lucide-vue-next'
+import { articles } from '~/data/articles'
 
 const selectedCategory = ref('all')
 
-const { data: articles } = await useFetch('/api/articles')
+const items = articles.map(a => ({ ...a, _path: `/writing/${a.id}` }))
 
 const categories = computed(() => {
-  if (!articles.value) return ['all']
-  const cats = Array.from(new Set(articles.value.map((a: any) => a.category)))
+  const cats = Array.from(new Set(items.map(a => a.category)))
   return ['all', ...cats]
 })
 
 const filteredArticles = computed(() => {
-  if (!articles.value) return []
-  if (selectedCategory.value === 'all') {
-    return articles.value
-  }
-  return articles.value.filter((a: any) => a.category === selectedCategory.value)
+  if (selectedCategory.value === 'all') return items
+  return items.filter(a => a.category === selectedCategory.value)
 })
 </script>
 
@@ -26,7 +22,7 @@ const filteredArticles = computed(() => {
   <div class="pt-24 pb-20 px-6">
     <div class="max-w-6xl mx-auto">
       <div class="mb-12">
-        <h1 class="text-4xl md:text-5xl font-medium mb-4">写作专栏</h1>
+        <h1 class="text-4xl md:text-4xl font-medium mb-4">写作专栏</h1>
         <p class="text-xl text-gray-600">
           分享技术见解、产品思考和创业经验
         </p>

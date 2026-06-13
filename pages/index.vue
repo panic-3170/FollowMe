@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue'
-import { useFetch } from 'nuxt/app'
 import { ExternalLink, ArrowUp } from 'lucide-vue-next'
 import { projects } from '~/data/projects'
+import { articles } from '~/data/articles'
 
 const showScrollTop = ref(false)
 
@@ -25,9 +25,9 @@ function smoothScrollTo(id: string) {
   window.scrollTo({ top, behavior: 'smooth' })
 }
 
-const { data: articles } = useFetch('/api/articles', {
-  transform: (res: any[]) => res.slice(0, 3)
-})
+const featuredArticles = articles
+  .slice(0, 3)
+  .map(a => ({ ...a, _path: `/writing/${a.id}` }))
 </script>
 
 <template>
