@@ -1,14 +1,14 @@
 import tailwindcss from '@tailwindcss/vite'
 
-// GitHub Pages 项目页路径：https://<user>.github.io/FollowMe/
-// 切换到自定义域名时改为 '/'
+// 自定义域名：https://apppss.com/FollowMe/
+// 若以后想挂在域名根目录，把 BASE_URL 改为 '/'，并把 nitro.prerender.routes 里的 /FollowMe 前缀一并去掉
 const BASE_URL = '/FollowMe/'
-const SITE_URL = 'https://panic-3170.github.io'
+const SITE_URL = 'https://apppss.com'
 const FULL_SITE_URL = `${SITE_URL}${BASE_URL}`
 const AUTHOR_NAME = '王叔走都是上坡'
 const SITE_NAME = '王叔走都是上坡 · 独立开发者'
-const SITE_DESCRIPTION = '独立开发者 / 全栈工程师。专注 Vue 3、React Native、TypeScript 与独立产品，分享期货交易心得、CF+xray+nginx 反 GFW 技术方案与个人成长经验。'
-const SITE_KEYWORDS = '独立开发者,Vue 3,React Native,TypeScript,Flutter,Nuxt.js,期货交易,趋势跟踪,止损,xray,VLESS,Cloudflare,GFW,移动止损,产品设计,Git 工作流,个人成长'
+const SITE_DESCRIPTION = '独立开发者与全栈工程师的技术博客。深耕 Vue 3、React Native、TypeScript、Flutter、Nuxt.js 实战教程，分享独立产品出海经验、期货趋势跟踪与移动止损策略、程序员副业变现与个人成长方法论。'
+const SITE_KEYWORDS = '独立开发者,全栈工程师,独立开发,副业变现,程序员副业,远程工作,出海,独立产品,Vue 3 教程,Vue 3 组合式 API,Vue 3 最佳实践,React Native 性能优化,React Native 实战,TypeScript 教程,TypeScript 类型体操,Nuxt 3 教程,Nuxt 3 静态部署,Nuxt 3 GitHub Pages,Flutter 跨平台,Flutter 开发,期货交易,期货趋势跟踪,趋势跟踪策略,移动止损,止损技巧,程序化交易,教程,Cloudflare,VPS,Git 工作流,产品设计,个人成长,技术写作'
 const AUTHOR_EMAIL = 'panic3170@gmail.com'
 const AUTHOR_GITHUB = 'https://github.com/panic-3170'
 const AUTHOR_TWITTER = 'https://x.com/theruoshui3000'

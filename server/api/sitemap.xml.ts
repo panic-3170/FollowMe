@@ -2,7 +2,7 @@
 // 自动生成 sitemap.xml
 import { readArticles } from '~/server/utils/markdown'
 
-const SITE_URL = 'https://panic-3170.github.io'
+const SITE_URL = 'https://apppss.com'
 const BASE_URL = '/FollowMe/'
 const FULL_SITE_URL = `${SITE_URL}${BASE_URL}`
 

@@ -20,7 +20,7 @@ interface SeoOptions {
 }
 
 const SITE_NAME = '王叔走都是上坡 · 独立开发者'
-const SITE_URL = 'https://panic-3170.github.io'
+const SITE_URL = 'https://apppss.com'
 const BASE_URL = '/FollowMe/'
 const FULL_SITE_URL = `${SITE_URL}${BASE_URL}`
 const AUTHOR_NAME = '王叔走都是上坡'

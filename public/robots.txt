@@ -14,7 +14,7 @@ User-agent: Bingbot
 Allow: /
 
 # Sitemap
-Sitemap: https://panic-3170.github.io/FollowMe/sitemap.xml
+Sitemap: https://apppss.com/FollowMe/sitemap.xml
 
 # Crawl-delay
 Crawl-delay: 1
