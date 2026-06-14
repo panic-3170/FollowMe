@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
-import { Clock, Tag } from 'lucide-vue-next'
+import { Clock, Tag, Rss } from 'lucide-vue-next'
+import { usePageSeo } from '~/composables/usePageSeo'
 
 interface ArticleListItem {
   id: string
@@ -12,6 +13,8 @@ interface ArticleListItem {
   _excerpt: string
   _path: string
 }
+
+const config = useRuntimeConfig()
 
 const { data: articlesData } = await useFetch<ArticleListItem[]>('/api/articles')
 const articles = articlesData.value || []
@@ -29,16 +32,56 @@ const filteredArticles = computed(() => {
   if (selectedCategory.value === 'all') return items
   return items.filter(a => a.category === selectedCategory.value)
 })
+
+// SEO 配置
+usePageSeo({
+  title: '写作专栏',
+  description: '技术见解、产品思考、交易心得和创业经验。涵盖 Vue 3、React Native、TypeScript、期货交易、移动止损、xray 翻墙等热门话题。',
+  url: `${config.public.siteUrl}writing`,
+  tags: ['技术博客', 'Vue 3', 'React Native', '期货交易', '独立开发', 'TypeScript'],
+  jsonLd: {
+    '@context': 'https://schema.org',
+    '@type': 'Blog',
+    name: '王叔走都是上坡的写作专栏',
+    url: `${config.public.siteUrl}writing`,
+    description: '技术见解、产品思考、交易心得和创业经验',
+    author: { '@type': 'Person', name: config.public.author },
+    blogPost: items.slice(0, 10).map(a => ({
+      '@type': 'BlogPosting',
+      headline: a.title,
+      url: `${config.public.siteUrl}writing/${a.id}`,
+      datePublished: a.date,
+      keywords: a.tags.join(','),
+      articleSection: a.category,
+    })),
+  },
+})
 </script>
 
 <template>
   <div class="pt-24 pb-20 px-6">
     <div class="max-w-6xl mx-auto">
-      <div class="mb-12">
-        <h1 class="text-4xl md:text-4xl font-medium mb-4">写作专栏</h1>
-        <p class="text-xl text-gray-600">
-          分享技术见解、产品思考和创业经验
-        </p>
+      <Breadcrumb :items="[
+        { name: '首页', url: '/' },
+        { name: '写作专栏', url: '/writing' }
+      ]" />
+
+      <div class="mb-12 flex items-start justify-between flex-wrap gap-4">
+        <div>
+          <h1 class="text-4xl md:text-4xl font-medium mb-4">写作专栏</h1>
+          <p class="text-xl text-gray-600">
+            分享技术见解、产品思考和创业经验
+          </p>
+        </div>
+        <a
+          href="/FollowMe/rss.xml"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 text-gray-700 rounded-full hover:bg-gray-50 transition-colors text-sm"
+        >
+          <Rss class="w-4 h-4" />
+          RSS 订阅
+        </a>
       </div>
 
       <div class="mb-12 flex flex-wrap gap-3">
@@ -80,7 +123,7 @@ const filteredArticles = computed(() => {
             </h2>
 
             <div class="flex items-center gap-4 text-sm text-gray-500 mb-4">
-              <span>{{ article.date }}</span>
+              <time :datetime="article.date">{{ article.date }}</time>
               <span class="flex items-center gap-1">
                 <Clock class="w-4 h-4" />
                 {{ article.readTime }}
@@ -93,8 +136,8 @@ const filteredArticles = computed(() => {
 
             <div class="flex flex-wrap gap-2">
               <span
-                v-for="(tag, i) in article.tags"
-                :key="i"
+                v-for="tag in article.tags"
+                :key="tag"
                 class="flex items-center gap-1 px-2 py-1 bg-gray-50 text-gray-600 text-xs rounded"
               >
                 <Tag class="w-3 h-3" />

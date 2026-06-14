@@ -3,13 +3,41 @@ import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { ArrowLeft, ExternalLink, Github, CheckCircle2 } from 'lucide-vue-next'
 import { projects } from '~/data/projects'
+import { usePageSeo } from '~/composables/usePageSeo'
 
 const route = useRoute()
+const config = useRuntimeConfig()
 const project = computed(() => projects.find(p => p.id === route.params.id))
 
 if (!project.value) {
   throw createError({ statusCode: 404, statusMessage: '项目未找到' })
 }
+
+const proj = project.value
+
+// SEO 配置
+usePageSeo({
+  title: proj.name,
+  description: `${proj.name} - ${proj.description}。${proj.fullDescription}`,
+  type: 'article',
+  url: `${config.public.siteUrl}projects/${proj.id}`,
+  tags: proj.tags,
+  jsonLd: {
+    '@context': 'https://schema.org',
+    '@type': 'SoftwareApplication',
+    name: proj.name,
+    description: proj.description,
+    applicationCategory: 'WebApplication',
+    operatingSystem: 'Web',
+    author: { '@type': 'Person', name: config.public.author },
+    ...(proj.link && proj.link !== '#' ? { url: proj.link } : {}),
+    ...(proj.github ? {
+      sourceOrganization: { '@type': 'Organization', name: 'GitHub', url: proj.github },
+    } : {}),
+    keywords: proj.tags.join(','),
+    featureList: proj.features,
+  },
+})
 </script>
 
 <template>

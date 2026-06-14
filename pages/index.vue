@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue'
-import { ExternalLink, ArrowUp } from 'lucide-vue-next'
+import { ExternalLink, ArrowUp, Rss } from 'lucide-vue-next'
 import { projects } from '~/data/projects'
+import { usePageSeo } from '~/composables/usePageSeo'
 
 interface ArticleListItem {
   id: string
@@ -13,6 +14,8 @@ interface ArticleListItem {
   _excerpt: string
   _path: string
 }
+
+const config = useRuntimeConfig()
 
 const { data: articlesData } = await useFetch<ArticleListItem[]>('/api/articles')
 const articles = articlesData.value || []
@@ -41,6 +44,32 @@ function smoothScrollTo(id: string) {
 const featuredArticles = articles
   .slice(0, 3)
   .map(a => ({ ...a, _path: `/writing/${a.id}` }))
+
+// SEO 配置 - 首页
+usePageSeo({
+  title: undefined, // 使用站点默认 title
+  description: '独立开发者 / 全栈工程师的个人主页。分享 Vue 3、React Native、TypeScript 技术经验，期货交易心得（止损、趋势跟踪、移动止损），CF + xray + nginx 反 GFW 翻墙教程，独立开发与创业经验。',
+  url: config.public.siteUrl,
+  tags: ['独立开发者', 'Vue 3', 'React Native', 'TypeScript', 'Flutter', 'Nuxt.js', '期货交易', '止损', '移动止损', '趋势跟踪', 'xray', 'VLESS', 'Cloudflare', 'GFW', '个人博客', '全栈工程师'],
+  jsonLd: {
+    '@context': 'https://schema.org',
+    '@type': 'ProfilePage',
+    dateCreated: '2026-01-01',
+    dateModified: new Date().toISOString().split('T')[0],
+    mainEntity: {
+      '@type': 'Person',
+      name: config.public.author,
+      alternateName: '王叔',
+      jobTitle: '独立开发者 / 全栈工程师',
+      description: '独立开发者，专注前端技术（Vue 3、React Native、TypeScript）与独立产品，分享期货交易心得与翻墙技术方案。',
+      knowsAbout: [
+        'Vue 3', 'React Native', 'TypeScript', 'Flutter', 'Nuxt.js',
+        '期货交易', '趋势跟踪', '技术写作', '独立开发', '系统架构',
+        'xray 翻墙', 'Cloudflare CDN', 'GFW 绕过'
+      ],
+    },
+  },
+})
 </script>
 
 <template>

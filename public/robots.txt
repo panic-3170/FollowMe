@@ -1,4 +1,20 @@
+# robots.txt - SEO 优化版本
 User-agent: *
 Allow: /
+Disallow: /api/
 
+# 针对特定爬虫优化
+User-agent: Googlebot
+Allow: /
+
+User-agent: Baiduspider
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+# Sitemap
 Sitemap: https://panic-3170.github.io/FollowMe/sitemap.xml
+
+# Crawl-delay
+Crawl-delay: 1

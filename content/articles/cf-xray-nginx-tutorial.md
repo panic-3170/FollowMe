@@ -1,8 +1,16 @@
 # 移动宽带 SSH 不到海外 VPS？CF + xray + nginx 反 GFW 全套方案
 
-> **实测环境**：RackNerd VPS（Ubuntu 22.04）+ 3X-UI + Clash Verge + 域名走 Cloudflare
-> **适用场景**：家庭移动宽带（移动/电信/联通）被 GFW 干扰 SSH 直连海外 VPS
-> **最终效果**：根本不用 SSH 直连 VPS，所有代理流量都套上 Cloudflare CDN + 假网站防主动探测
+> **核心结论**：GFW/移动运营商会主动阻断到海外 VPS 的 SSH 流量。**正确做法是让所有流量走 Cloudflare CDN**，GFW 看不到真实 VPS IP，配合 nginx 假网站防主动探测。本文提供从零到一的完整部署方案。
+
+**3 分钟摘要**：
+- 移动宽带到 VPS 的 SSH 流量被 GFW 识别并阻断
+- 用 Cloudflare CDN 隐藏真实 VPS IP（免费方案）
+- xray VLESS + WebSocket 加密代理流量
+- nginx 假网站防御 GFW 主动探测
+
+**实测环境**：RackNerd VPS（Ubuntu 22.04）+ 3X-UI + Clash Verge + 域名走 Cloudflare
+**适用场景**：家庭移动宽带（移动/电信/联通）被 GFW 干扰 SSH 直连海外 VPS
+**最终效果**：根本不用 SSH 直连 VPS，所有代理流量都套上 Cloudflare CDN + 假网站防主动探测
 
 ---
 
@@ -637,5 +645,79 @@ VPS 文件结构：
 - GFW 主动探测看到的是博客 ✅
 - VPS IP 永远不会直接暴露 ✅
 - 日常维护只需要改 3X-UI 入站和 nginx 配置 ✅
+
+---
+
+## 常见问题 FAQ
+
+### 为什么 SSH 连不上 VPS，但 ping 是通的？
+
+这是 GFW/移动运营商对 SSH 流量的**主动识别与阻断**。GFW 维护了常用协议的特征库，SSH（22/443 端口）的握手包有明显特征。一旦匹配，直接 RST 断开连接。`ping` 用的是 ICMP 协议，不在阻断范围内，所以会通。
+
+**解决方法**：不要直连 VPS IP，让所有流量走 Cloudflare CDN，GFW 看不到真实 IP。
+
+### Cloudflare 免费版够用吗？
+
+**够用**。本方案用的就是 CF 免费版：
+
+- DNS 解析：免费
+- CDN 加速：免费
+- Origin Certificate：免费 15 年有效期
+- 不限流量（公平使用）
+
+唯一限制：免费版**不支持 Spectrum（TCP/UDP 转发）**，但 VLESS + WebSocket 走 HTTPS 443 端口完全够用。
+
+### 一定要用 RackNerd VPS 吗？其他 VPS 行不行？
+
+**可以**。本方案对 VPS 厂商没有要求，只要满足：
+- 系统：Ubuntu 20.04+ / Debian 11+ / CentOS 7+
+- 能 SSH 登录（用手机 4G 热点或机场中转）
+- IP 没被墙（可以用 `ping.chinaz.com` 测一下）
+
+**推荐 VPS 厂商**（按性价比）：RackNerd、CloudCone、BandwagonHost（搬瓦工）、HostDare、Vultr（按小时计费）。
+
+### 为什么用 VLESS 而不是 VMess 或 Trojan？
+
+| 协议 | 特点 | 推荐度 |
+|------|------|------|
+| **VLESS** | 新一代轻量协议，无加密依赖 TLS | ⭐⭐⭐⭐⭐（推荐） |
+| VMess | 老牌协议，自带加密但效率低 | ⭐⭐⭐ |
+| Trojan | 伪装成 HTTPS，但握手特征明显 | ⭐⭐ |
+| Shadowsocks | 已被 GFW 部分识别 | ⭐⭐ |
+
+**VLESS + WebSocket + TLS** 是目前最难被 GFW 识别的组合，因为流量完全包裹在标准 HTTPS 中。
+
+### nginx 假网站有什么作用？
+
+**防 GFW 主动探测**。GFW 会对 Cloudflare CDN 后面的 IP 发起 HTTPS 探测请求：
+- 如果 443 端口返回的是 xray 的特征 → 标记为代理，封 IP
+- 如果 443 端口返回的是普通博客 → 当作正常网站放行
+
+nginx 假网站就是让"非代理用户"访问时看到的是博客，真实代理用户访问 `/ws` 路径才走 xray。
+
+### 3X-UI 面板要不要暴露到公网？
+
+**绝对不要**。3X-UI 面板必须：
+- 监听 `127.0.0.1`（仅本机访问）
+- 端口改非标准（如 `2053`、`31456`）
+- 设置强密码 + 改默认用户名 `admin`
+
+访问面板通过 SSH 端口转发：`ssh -L 2053:127.0.0.1:2053 root@VPS_IP`，然后浏览器开 `http://127.0.0.1:2053`。
+
+### 这套方案会被封吗？
+
+**大概率不会长期稳定，但能用很久**。GFW 不断升级，本质是一场猫鼠游戏。本方案的优势：
+- VPS IP 永远不暴露 → 封 IP 难度极大
+- 假网站防探测 → GFW 看不到 xray 特征
+- Cloudflare CDN 缓冲 → 真实流量被分散到 CF 全球节点
+
+**降低风险的额外建议**：
+- 不要在 VPS 上做违规内容
+- 节点不要分享给太多人
+- 定期更换 UUID 和路径
+
+### 一个域名能部署多个节点吗？
+
+**可以**。在 Cloudflare DNS 里加多个 A 记录（如 `proxy1`、`proxy2`、`proxy3`），都指向同一 VPS IP。客户端可以配置多个节点做负载均衡 / 故障转移。
 
 **完。**

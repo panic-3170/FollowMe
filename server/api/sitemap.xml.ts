@@ -1,0 +1,44 @@
+// server/api/sitemap.xml.ts
+// 自动生成 sitemap.xml
+import { readArticles } from '~/server/utils/markdown'
+
+const SITE_URL = 'https://panic-3170.github.io'
+const BASE_URL = '/FollowMe/'
+const FULL_SITE_URL = `${SITE_URL}${BASE_URL}`
+
+export default defineEventHandler((event) => {
+  setHeader(event, 'Content-Type', 'application/xml; charset=utf-8')
+
+  const articles = readArticles()
+  const now = new Date().toISOString().split('T')[0]
+
+  // 静态路由
+  const staticRoutes = [
+    { loc: `${FULL_SITE_URL}`, lastmod: now, changefreq: 'weekly', priority: '1.0' },
+    { loc: `${FULL_SITE_URL}writing`, lastmod: now, changefreq: 'weekly', priority: '0.9' },
+    { loc: `${FULL_SITE_URL}about`, lastmod: now, changefreq: 'monthly', priority: '0.7' },
+  ]
+
+  // 文章路由
+  const articleRoutes = articles.map(a => ({
+    loc: `${FULL_SITE_URL}writing/${a.id}`,
+    lastmod: a.date,
+    changefreq: 'monthly',
+    priority: '0.7',
+  }))
+
+  const allRoutes = [...staticRoutes, ...articleRoutes]
+
+  const xml = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+${allRoutes.map(r => `  <url>
+    <loc>${r.loc}</loc>
+    <lastmod>${r.lastmod}</lastmod>
+    <changefreq>${r.changefreq}</changefreq>
+    <priority>${r.priority}</priority>
+  </url>`).join('\n')}
+</urlset>`
+
+  return xml
+})
