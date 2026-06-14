@@ -10,6 +10,13 @@ permissions:
   pages: write
   id-token: write
 
+# Force all JavaScript actions to run on Node.js 24.
+# Required because some pinned actions (e.g. actions/configure-pages@v5)
+# still target Node.js 20, which is being removed from the runner on
+# 2026-09-16. See https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 concurrency:
   group: pages
   cancel-in-progress: false
@@ -18,7 +25,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - uses: actions/setup-node@v5
         with:
