@@ -10,10 +10,11 @@ permissions:
   pages: write
   id-token: write
 
-# Force all JavaScript actions to run on Node.js 24.
-# Required because some pinned actions (e.g. actions/configure-pages@v5)
-# still target Node.js 20, which is being removed from the runner on
-# 2026-09-16. See https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+# Pin every action to its latest major that runs on Node 24.
+# Older majors (configure-pages@v5, upload-pages-artifact@v3) are stuck on
+# Node 20 and trigger the "Node.js 20 actions are deprecated" warning;
+# upload-pages-artifact@v3 in particular has been hard-deprecated since
+# 2024-11-30 and can cause the build step to exit non-zero.
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
@@ -29,12 +30,12 @@ jobs:
 
       - uses: actions/setup-node@v5
         with:
-          node-version: 22
+          node-version: 24
           cache: npm
 
       - name: Setup Pages
         id: pages
-        uses: actions/configure-pages@v5
+        uses: actions/configure-pages@v6
 
       - name: Install dependencies
         run: npm ci
@@ -45,7 +46,7 @@ jobs:
           NITRO_PRESET: github_pages
 
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v5
         with:
           path: .output/public
 
