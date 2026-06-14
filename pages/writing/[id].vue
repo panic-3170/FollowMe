@@ -1,22 +1,33 @@
 <script setup lang="ts">
-import { computed } from 'vue'
 import { useRoute } from 'vue-router'
-import { marked } from 'marked'
 import { ArrowLeft, Clock, Calendar, Tag } from 'lucide-vue-next'
-import { articles } from '~/data/articles'
+
+interface ArticleListItem {
+  id: string
+  title: string
+  date: string
+  category: string
+  readTime: string
+  tags: string[]
+  _excerpt: string
+  _path: string
+}
+
+interface ArticleDetail extends ArticleListItem {
+  content: string
+}
 
 const route = useRoute()
 const id = route.params.id as string
 
-const article = computed(() => articles.find(a => a.id === id))
+const { data: article } = await useFetch<ArticleDetail>(`/api/articles/${id}`)
 
 if (!article.value) {
   throw createError({ statusCode: 404, statusMessage: '文章未找到' })
 }
 
-const htmlContent = computed(() =>
-  article.value ? marked.parse(article.value.content) as string : ''
-)
+const { data: allArticles } = await useFetch<ArticleListItem[]>('/api/articles')
+const articles = allArticles.value || []
 
 const relatedArticles = computed(() => {
   if (!article.value) return []
@@ -73,7 +84,7 @@ const relatedArticles = computed(() => {
           </div>
         </header>
 
-        <div class="prose prose-lg max-w-none" v-html="htmlContent"></div>
+        <div class="prose prose-lg max-w-none" v-html="article.content"></div>
       </article>
 
       <section v-if="relatedArticles.length > 0" class="mt-16 pt-12 border-t border-gray-200">

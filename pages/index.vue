@@ -2,7 +2,20 @@
 import { ref, onMounted, onUnmounted } from 'vue'
 import { ExternalLink, ArrowUp } from 'lucide-vue-next'
 import { projects } from '~/data/projects'
-import { articles } from '~/data/articles'
+
+interface ArticleListItem {
+  id: string
+  title: string
+  date: string
+  category: string
+  readTime: string
+  tags: string[]
+  _excerpt: string
+  _path: string
+}
+
+const { data: articlesData } = await useFetch<ArticleListItem[]>('/api/articles')
+const articles = articlesData.value || []
 
 const showScrollTop = ref(false)
 

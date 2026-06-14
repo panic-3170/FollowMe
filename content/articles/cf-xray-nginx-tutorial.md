@@ -8,7 +8,7 @@
 
 ## 一、问题背景
 
-从 RackNerd 买了一台美国 VPS，IP `104.223.121.125`，给了 root 账号密码让我从 22 端口登录。
+从 RackNerd 买了一台美国 VPS，IP `104.223.xxx.xxx`，给了 root 账号密码让我从 22 端口登录。
 
 **异常表现**：
 - `ping` 这个 IP ✅ 通
@@ -74,7 +74,7 @@
 |--------|------|------|
 | `<域名>` | CF 上接入的域名 | `qzz.io` |
 | `proxy.<域名>` | 代理用的子域 | `proxy.qzz.io` |
-| `<VPS_IP>` | VPS 真实 IP | `104.223.121.125` |
+| `<VPS_IP>` | VPS 真实 IP | `104.223.xxx.xxx` |
 | `<UUID>` | 3X-UI 生成的客户端 UUID | `b1a4d8e7-xxxx-...` |
 
 ---
@@ -443,7 +443,7 @@ rules:
 
 浏览器访问：
 
-- <https://ip.sb> — 应显示美国 IP `104.223.121.125`
+- <https://ip.sb> — 应显示美国 IP `104.223.xxx.xxx`
 - <https://www.google.com> — 应能打开
 - <https://ipinfo.io/json> — 应显示 `country: "US"`
 
@@ -451,7 +451,7 @@ rules:
 
 ```powershell
 curl.exe -s https://ifconfig.me
-# 期望：104.223.121.125
+# 期望：104.223.xxx.xxx
 ```
 
 ---

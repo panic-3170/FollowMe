@@ -14,34 +14,26 @@ concurrency:
   group: pages
   cancel-in-progress: false
 
-# Opt into Node 24 for any actions that don't yet declare Node 24 support
-env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
-
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
-
-      - uses: pnpm/action-setup@v6
-        with:
-          version: 9
+      - uses: actions/checkout@v4
 
       - uses: actions/setup-node@v5
         with:
           node-version: 22
-          cache: pnpm
+          cache: npm
 
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v5
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: npm ci
 
       - name: Generate static site
-        run: pnpm run generate
+        run: npm run generate
         env:
           NITRO_PRESET: github_pages
 

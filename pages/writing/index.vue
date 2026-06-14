@@ -1,7 +1,20 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import { Clock, Tag } from 'lucide-vue-next'
-import { articles } from '~/data/articles'
+
+interface ArticleListItem {
+  id: string
+  title: string
+  date: string
+  category: string
+  readTime: string
+  tags: string[]
+  _excerpt: string
+  _path: string
+}
+
+const { data: articlesData } = await useFetch<ArticleListItem[]>('/api/articles')
+const articles = articlesData.value || []
 
 const selectedCategory = ref('all')
 

@@ -2,7 +2,7 @@
 id: indie-developer-journey
 title: 从零到一：我的独立开发之路
 date: 2026-05-15
-category: 创业心得
+category: 创业人生
 readTime: 8 分钟
 tags:
   - 独立开发
