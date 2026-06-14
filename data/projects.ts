@@ -1,5 +1,5 @@
 import type { Component } from 'vue'
-import { AppWindow, Monitor, Globe } from 'lucide-vue-next'
+import { AppWindow, Wifi, Globe, Monitor } from 'lucide-vue-next'
 
 export interface Project {
   id: string
@@ -70,26 +70,30 @@ export const projects: Project[] = [
   },
   {
     id: 'webflow',
-    name: 'WebFlow',
-    icon: Globe,
-    description: '可视化网页编辑器，无需代码即可构建专业网站',
-    tags: ['React', 'Node.js', 'MongoDB'],
-    status: '已上线',
-    users: '20K+ 用户',
-    fullDescription: 'WebFlow 是一款强大的可视化网页编辑器，让任何人都能轻松创建专业网站。拖放式界面、丰富的组件库、实时预览功能，让网页设计变得简单而有趣。',
+    name: 'WiFi 传输助手',
+    icon: Wifi,
+    description: '局域网 P2P 文件传输 / 即时通讯工具，无需联网，扫码即连',
+    tags: ['Flutter', 'GetX', 'WebSocket', 'mobile_scanner'],
+    status: '开发中 v1.0',
+    users: '内部测试',
+    fullDescription: 'WiFi 传输助手 是一款基于 Flutter + GetX 的局域网 P2P 文件传输与即时通讯工具。手机开启 HTTP/WebSocket 服务器，浏览器访问 IP:port 后自动生成二维码，App 扫码即可建立加密通道，支持文件互传、即时消息。**整个过程完全在局域网内进行，无需联网，隐私零泄露**。',
     features: [
-      '所见即所得的编辑体验',
-      '丰富的预制组件库',
-      '响应式设计，适配各种设备',
-      '自定义动画和交互效果',
-      '一键导出代码或直接发布',
-      '团队协作和版本控制'
+      '零依赖传输：手机和电脑在同一 WiFi/热点下即可互传文件，无需云端、无需登录',
+      '二维码扫码连接：Web 端自动生成连接二维码，App 端 mobile_scanner 扫描即连',
+      'Token 鉴权：32 字符加密安全随机 Token，30 分钟自动失效，支持手动刷新',
+      'WebSocket 实时通信：双向消息推送，毫秒级延迟',
+      'Material Design 3 UI：现代化设计，跟随系统深色模式',
+      '多平台支持：iOS / Android / macOS / Windows / Linux / Web 全平台覆盖',
+      '局域网 IP 智能识别：自动检测 192.168.x.x / 10.x.x.x / 172.16-31.x.x 网段',
+      '零依赖网页端：内置 HTML5 + CSS3 + Vanilla JS，浏览器打开即用'
     ],
     techStack: [
-      { category: '前端', items: ['React', 'TypeScript', 'Tailwind CSS', 'Framer Motion'] },
-      { category: '后端', items: ['Node.js', 'Express', 'MongoDB', 'AWS S3'] },
-      { category: '基础设施', items: ['Docker', 'Kubernetes', 'CI/CD'] }
+      { category: 'App 端', items: ['Flutter 3.x', 'Dart 3.7+', 'GetX 4.6'] },
+      { category: '网络', items: ['dart:io HttpServer', 'WebSocket', 'shelf', 'shelf_web_socket'] },
+      { category: '扫描 / 存储', items: ['mobile_scanner', 'qr_flutter', 'get_storage', 'path_provider', 'connectivity_plus'] },
+      { category: 'Web 端', items: ['HTML5', 'CSS3', 'Vanilla JS', 'qrcode.js'] }
     ],
-    link: 'https://webflow.example.com'
+    link: '#',
+    github: 'https://github.com/panic-3170/wifi-transfer-assistant'
   }
 ]
