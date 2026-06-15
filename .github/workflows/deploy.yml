@@ -49,6 +49,11 @@ jobs:
         uses: actions/upload-pages-artifact@v5
         with:
           path: .output/public
+          # v5 默认 exclude 隐藏文件,但 nitro 的 github_pages 预设会生成
+          # .nojekyll(以及 .output/public 里其它点开头的元数据),
+          # 漏掉这个文件 GitHub Pages 会跑 Jekyll,Jekyll 默认忽略
+          # 所有 _ 开头的目录,导致 _nuxt/ 整个消失、JS/CSS 全 404。
+          include-hidden-files: true
 
   deploy:
     needs: build
