@@ -21,7 +21,8 @@ interface SeoOptions {
 
 const SITE_NAME = '王叔走都是上坡 · 独立开发者'
 const SITE_URL = 'https://apppss.com'
-const BASE_URL = '/FollowMe/'
+// 必须和 nuxt.config.ts 里的 BASE_URL 保持一致(都是 '/'),否则 og:url / canonical / 面包屑 会指向 /FollowMe/* 这条不存在的路径
+const BASE_URL = '/'
 const FULL_SITE_URL = `${SITE_URL}${BASE_URL}`
 const AUTHOR_NAME = '王叔走都是上坡'
 const DEFAULT_DESCRIPTION = '独立开发者 / 全栈工程师。专注 Vue 3、React Native、TypeScript 与独立产品，分享期货交易心得、CF+xray+nginx 反 GFW 技术方案与个人成长经验。'
@@ -137,7 +138,10 @@ export function buildBreadcrumbJsonLd(items: { name: string; url: string }[]) {
       '@type': 'ListItem',
       position: index + 1,
       name: item.name,
-      item: item.url,
+      // Schema.org 要求 item 必须是绝对 URL,直接传 '/xxx' 会被 Google 报"字段 id 中的网址无效"
+      item: item.url.startsWith('http')
+        ? item.url
+        : `${FULL_SITE_URL.replace(/\/$/, '')}${item.url}`,
     })),
   }
 }
