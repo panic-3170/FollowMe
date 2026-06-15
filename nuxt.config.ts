@@ -2,7 +2,7 @@ import tailwindcss from '@tailwindcss/vite'
 
 // 自定义域名：https://apppss.com/FollowMe/
 // 若以后想挂在域名根目录，把 BASE_URL 改为 '/'，并把 nitro.prerender.routes 里的 /FollowMe 前缀一并去掉
-const BASE_URL = '/FollowMe/'
+const BASE_URL = '/'
 const SITE_URL = 'https://apppss.com'
 const FULL_SITE_URL = `${SITE_URL}${BASE_URL}`
 const AUTHOR_NAME = '王叔走都是上坡'
@@ -151,12 +151,12 @@ export default defineNuxtConfig({
       // sitemap 和 rss 由 server/api/*.ts 自动生成
       // 路径需要带 baseURL 前缀
       routes: [
-        '/FollowMe/',
-        '/FollowMe/writing',
-        '/FollowMe/about',
-        '/FollowMe/404.html',
-        '/FollowMe/sitemap.xml',
-        '/FollowMe/rss.xml',
+        '/',
+        '/writing',
+        '/about',
+        '/404.html',
+        '/sitemap.xml',
+        '/rss.xml',
       ],
       // 不让 404 错误中断构建
       failOnError: false,
