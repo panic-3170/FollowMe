@@ -18,7 +18,17 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   ssr: true,
   vite: {
-    base: BASE_URL,
+    // 必须用相对路径 './' 而不是 BASE_URL。
+    // GitHub Pages project page(仓库名 FollowMe + 自定义域名 apppss.com)部署后,
+    // 仓库根的 _nuxt/xxx.js 在 URL 空间里已经是 /FollowMe/_nuxt/xxx.js
+    // (project page 会自动 prepend 仓库名作为路径前缀)。
+    // 如果 vite.base 写成 '/FollowMe/',HTML 里的 <script> 会变成
+    // 绝对路径 /FollowMe/_nuxt/xxx.js,叠加 project page 的自动前缀后
+    // 变成 /FollowMe/FollowMe/_nuxt/xxx.js,稳定 404。
+    // 改用 './' 让浏览器按 HTML 当前位置解析,完全避开双重前缀问题。
+    // app.baseURL 保持 '/FollowMe/' 不动 — 它管的是运行时 router 和 _payload.json,
+    // 这两个需要绝对路径,跟 vite.base 是两套机制。
+    base: './',
     plugins: [tailwindcss()],
   },
   css: ['~/assets/css/main.css'],
