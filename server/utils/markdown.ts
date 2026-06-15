@@ -217,7 +217,8 @@ function parseFrontmatter(frontmatter: string): Record<string, any> {
   let currentValue: string[] = []
 
   frontmatter.split('\n').forEach(line => {
-    const match = line.match(/^(\w+):\s*(.+)$/)
+    // 用 (.*) 而不是 (.+),允许 key 后面没有值(如 `tags:`),这样后续的 - xxx 才会被正确归到 tags
+    const match = line.match(/^(\w+):\s*(.*)$/)
     if (match) {
       if (currentKey) {
         meta[currentKey] = parseValue(currentValue.join('\n'))
@@ -247,8 +248,10 @@ function parseValue(value: string): any {
   if (value === 'true') return true
   if (value === 'false') return false
 
-  const num = parseFloat(value)
-  if (!isNaN(num)) return num
+  // 必须整个字符串都是数字才转为 number,避免 "86 手机号..." 被 parseFloat 截成 86
+  if (/^-?\d+(\.\d+)?$/.test(value)) {
+    return Number(value)
+  }
 
   return value
 }
