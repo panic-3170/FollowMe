@@ -2,8 +2,9 @@
 // 自动生成 RSS 2.0 feed
 import { readArticles } from '~/server/utils/markdown'
 
+// 必须和 nuxt.config.ts 里的 BASE_URL + SITE_URL 保持一致
 const SITE_URL = 'https://apppss.com'
-const BASE_URL = '/FollowMe/'
+const BASE_URL = '/'
 const FULL_SITE_URL = `${SITE_URL}${BASE_URL}`
 const SITE_NAME = '王叔走都是上坡 · 独立开发者'
 const SITE_DESCRIPTION = '独立开发者 / 全栈工程师的博客。分享技术教程、交易心得与个人成长。'

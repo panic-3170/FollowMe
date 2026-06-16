@@ -164,7 +164,7 @@ usePageSeo({
               </div>
             </a>
             <a
-              href="/FollowMe/rss.xml"
+              href="/rss.xml"
               target="_blank"
               rel="noopener noreferrer"
               class="flex items-center gap-3 p-4 bg-white rounded-xl border border-gray-200 hover:shadow-md transition-all"

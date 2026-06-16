@@ -2,8 +2,10 @@
 // 自动生成 sitemap.xml
 import { readArticles } from '~/server/utils/markdown'
 
+// 必须和 nuxt.config.ts 里的 BASE_URL + SITE_URL 保持一致
+// 站点使用自定义域名 apppss.com 部署在根路径
 const SITE_URL = 'https://apppss.com'
-const BASE_URL = '/FollowMe/'
+const BASE_URL = '/'
 const FULL_SITE_URL = `${SITE_URL}${BASE_URL}`
 
 export default defineEventHandler((event) => {
@@ -19,10 +21,10 @@ export default defineEventHandler((event) => {
     { loc: `${FULL_SITE_URL}about`, lastmod: now, changefreq: 'monthly', priority: '0.7' },
   ]
 
-  // 文章路由
+  // 文章路由 - 优先用 modifiedAt(若有),否则用 date
   const articleRoutes = articles.map(a => ({
     loc: `${FULL_SITE_URL}writing/${a.id}`,
-    lastmod: a.date,
+    lastmod: a.modifiedAt || a.date,
     changefreq: 'monthly',
     priority: '0.7',
   }))

@@ -13,8 +13,33 @@ Allow: /
 User-agent: Bingbot
 Allow: /
 
+# AI / LLM 爬虫(参考 llmstxt.org 社区建议) - 允许抓取 llms.txt 和文章全文
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
 # Sitemap
-Sitemap: https://apppss.com/FollowMe/sitemap.xml
+Sitemap: https://apppss.com/sitemap.xml
+
+# LLM-friendly 入口(参考 https://llmstxt.org/)
+# 告知 AI 爬虫本网站的"机器可读目录"位置
 
 # Crawl-delay
 Crawl-delay: 1

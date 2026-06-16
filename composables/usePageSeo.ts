@@ -104,7 +104,7 @@ export function buildArticleJsonLd(article: Article, url: string) {
     description: article._excerpt || article.title,
     image: `${FULL_SITE_URL}og-default.png`,
     datePublished: article.date,
-    dateModified: article.date,
+    dateModified: article.modifiedAt || article.date,
     author: {
       '@type': 'Person',
       name: AUTHOR_NAME,

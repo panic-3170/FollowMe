@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { ArrowLeft, Clock, Calendar, Tag, Share2, Twitter, Github } from 'lucide-vue-next'
-import { usePageSeo, buildArticleJsonLd } from '~/composables/usePageSeo'
+import { ArrowLeft, Clock, Calendar, Tag, Share2, Twitter, Github, User, Edit3 } from 'lucide-vue-next'
+import { usePageSeo, buildArticleJsonLd, buildFaqJsonLd } from '~/composables/usePageSeo'
 
 interface ArticleListItem {
   id: string
@@ -13,8 +13,15 @@ interface ArticleListItem {
   _path: string
 }
 
+interface Faq {
+  question: string
+  answer: string
+}
+
 interface ArticleDetail extends ArticleListItem {
   content: string
+  modifiedAt?: string
+  _faqs?: Faq[]
 }
 
 const route = useRoute()
@@ -43,18 +50,31 @@ const relatedArticles = computed(() => {
 const fullUrl = computed(() => `${config.public.siteUrl}writing/${id}`)
 const shareText = computed(() => `${article.value?.title} | ${config.public.siteName}`)
 
+// 独立修改日期（frontmatter 显式指定 modifiedAt 才会有值）
+const modifiedDate = computed(() => article.value?.modifiedAt || article.value?.date)
+const showModified = computed(() => !!article.value?.modifiedAt && article.value.modifiedAt !== article.value?.date)
+
 // SEO 配置
+// 同时注入 Article + FAQPage（若文章有 FAQ 区段）
+const jsonLdBlocks = computed<Record<string, any>[]>(() => {
+  const blocks: Record<string, any>[] = [buildArticleJsonLd(article.value!, fullUrl.value)]
+  if (article.value?._faqs && article.value._faqs.length > 0) {
+    blocks.push(buildFaqJsonLd(article.value._faqs))
+  }
+  return blocks
+})
+
 usePageSeo({
   title: article.value.title,
   description: article.value._excerpt || article.value.title,
   type: 'article',
   url: fullUrl.value,
   publishedAt: article.value.date,
-  modifiedAt: article.value.date,
+  modifiedAt: modifiedDate.value,
   author: config.public.author,
   tags: article.value.tags,
   category: article.value.category,
-  jsonLd: buildArticleJsonLd(article.value, fullUrl.value),
+  jsonLd: jsonLdBlocks.value,
 })
 </script>
 
@@ -89,19 +109,68 @@ usePageSeo({
 
           <p class="sr-only" itemprop="description">{{ article._excerpt || article.title }}</p>
 
-          <div class="flex flex-wrap items-center gap-6 text-gray-600 pb-6 border-b border-gray-200">
+          <div class="flex flex-wrap items-center gap-x-6 gap-y-3 text-gray-600 pb-6 border-b border-gray-200">
+            <!-- 发布日期 -->
             <div class="flex items-center gap-2">
               <Calendar class="w-4 h-4" />
               <time :datetime="article.date" itemprop="datePublished">{{ article.date }}</time>
             </div>
+
+            <!-- 阅读时长 -->
             <div class="flex items-center gap-2">
               <Clock class="w-4 h-4" />
               <span>{{ article.readTime }}阅读</span>
             </div>
-            <div class="flex items-center gap-2" itemprop="author" itemscope itemtype="https://schema.org/Person">
-              <span class="sr-only" itemprop="name">{{ config.public.author }}</span>
+
+            <!-- 作者（E-E-A-T 可见化） -->
+            <div
+              class="flex items-center gap-2"
+              itemprop="author"
+              itemscope
+              itemtype="https://schema.org/Person"
+            >
+              <span class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-gray-900 text-white text-xs font-medium">
+                <User class="w-3.5 h-3.5" />
+              </span>
+              <NuxtLink
+                to="/about"
+                class="font-medium text-gray-900 hover:text-blue-600 transition-colors"
+                itemprop="name"
+                :title="`关于 ${config.public.author}`"
+              >
+                {{ config.public.author }}
+              </NuxtLink>
+              <meta itemprop="url" :content="config.public.siteUrl" />
+              <a
+                href="https://github.com/panic-3170"
+                target="_blank"
+                rel="noopener noreferrer author"
+                class="text-gray-400 hover:text-gray-900 transition-colors"
+                itemprop="sameAs"
+                aria-label="作者 GitHub"
+              >
+                <Github class="w-4 h-4" />
+              </a>
+              <a
+                href="https://x.com/theruoshui3000"
+                target="_blank"
+                rel="noopener noreferrer author"
+                class="text-gray-400 hover:text-gray-900 transition-colors"
+                itemprop="sameAs"
+                aria-label="作者 X / Twitter"
+              >
+                <Twitter class="w-4 h-4" />
+              </a>
             </div>
-            <meta itemprop="dateModified" :content="article.date" />
+
+            <!-- 最近更新（仅当与发布日期不同时显示） -->
+            <div v-if="showModified" class="flex items-center gap-2 text-gray-500">
+              <Edit3 class="w-4 h-4" />
+              <span>更新于</span>
+              <time :datetime="modifiedDate">{{ modifiedDate }}</time>
+              <meta itemprop="dateModified" :content="modifiedDate" />
+            </div>
+            <meta v-else itemprop="dateModified" :content="article.date" />
           </div>
 
           <div class="flex flex-wrap gap-2 mt-6">

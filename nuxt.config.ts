@@ -88,6 +88,8 @@ export default defineNuxtConfig({
         { rel: 'canonical', href: FULL_SITE_URL },
         { rel: 'alternate', type: 'application/rss+xml', title: SITE_NAME, href: `${FULL_SITE_URL}rss.xml` },
         { rel: 'sitemap', type: 'application/xml', href: `${FULL_SITE_URL}sitemap.xml` },
+        // llms.txt - LLM/AI 爬虫入口(llmstxt.org 规范)
+        { rel: 'alternate', type: 'text/plain', title: 'LLM-friendly site index', href: `${FULL_SITE_URL}llms.txt` },
       ],
       script: [
         {
@@ -148,7 +150,7 @@ export default defineNuxtConfig({
     preset: 'static',
     prerender: {
       crawlLinks: true,
-      // sitemap 和 rss 由 server/api/*.ts 自动生成
+      // sitemap / rss / llms.txt 由 server/api/*.ts 自动生成
       // 路径需要带 baseURL 前缀
       routes: [
         '/',
@@ -157,6 +159,7 @@ export default defineNuxtConfig({
         '/404.html',
         '/sitemap.xml',
         '/rss.xml',
+        '/llms.txt',
       ],
       // 不让 404 错误中断构建
       failOnError: false,

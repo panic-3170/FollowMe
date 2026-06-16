@@ -6,12 +6,16 @@ export interface Article {
   id: string
   title: string
   date: string
+  /** 独立修改日期（frontmatter 显式指定；不指定则与 date 相同） */
+  modifiedAt?: string
   category: string
   readTime: string
   tags: string[]
   content: string
   _excerpt: string
   _path: string
+  /** FAQ 区段抽取出的问答对（仅含常见问题/FAQ 区段） */
+  _faqs?: { question: string; answer: string }[]
 }
 
 // 配置 marked 选项
@@ -78,6 +82,7 @@ function parseMarkdown(content: string, filename: string, mtime: Date) {
   const id = filename.replace('.md', '')
   const title = meta.title || extractTitle(body) || id
   const date = meta.date || mtime.toISOString().split('T')[0]
+  const modifiedAt = meta.modifiedAt || date
   const category = meta.category || inferCategory(body, id)
   const readTime = meta.readTime || estimateReadTime(body)
   const tags = meta.tags || extractTags(body)
@@ -85,14 +90,19 @@ function parseMarkdown(content: string, filename: string, mtime: Date) {
   // 提取摘要：跳过标题、引用、分割线，取第一段正文
   const excerpt = extractExcerpt(body)
 
+  // 提取 FAQ 区段（用于 FAQPage 结构化数据）
+  const faqs = extractFaqs(body)
+
   return {
     title,
     date,
+    modifiedAt: modifiedAt !== date ? modifiedAt : undefined,
     category,
     readTime,
     tags,
     content: marked.parse(body) as string,
-    _excerpt: excerpt
+    _excerpt: excerpt,
+    _faqs: faqs.length > 0 ? faqs : undefined,
   }
 }
 
@@ -209,6 +219,75 @@ function extractExcerpt(body: string): string {
     return trimmed.replace(/[#*_>`]/g, '').replace(/\n/g, ' ').slice(0, 150)
   }
   return ''
+}
+
+/**
+ * 从 Markdown 正文抽取 FAQ 问答对
+ * 规则：
+ * 1. 找到 H2 标题包含 "FAQ" / "常见问题" / "问答" / "Q&A" 的区段
+ * 2. 在该区段内，每个 H3 视为一个问题，H3 标题到下一个 H3 之间的正文视为答案
+ * 3. 答案剔除 Markdown 标记，转为纯文本
+ */
+function extractFaqs(body: string): { question: string; answer: string }[] {
+  const lines = body.split('\n')
+
+  // 1) 定位 FAQ 区段起止
+  const faqHeaderRegex = /^##\s+(.+)$/
+  const faqStart = lines.findIndex(line => {
+    const m = line.match(faqHeaderRegex)
+    if (!m) return false
+    const t = m[1].toLowerCase()
+    return /常见问题|f&q|问答|questions?\s*(&|and)\s*answers/i.test(t) || /frequently\s*asked/i.test(t)
+  })
+  if (faqStart === -1) return []
+
+  // 找到下一个 H2（FAQ 区段结束）
+  let faqEnd = lines.length
+  for (let i = faqStart + 1; i < lines.length; i++) {
+    if (faqHeaderRegex.test(lines[i])) {
+      faqEnd = i
+      break
+    }
+  }
+  const faqSection = lines.slice(faqStart + 1, faqEnd)
+
+  // 2) 抽取 H3 问答对
+  const h3Regex = /^###\s+(.+)$/
+  const faqs: { question: string; answer: string }[] = []
+  let currentQuestion = ''
+  let currentAnswerLines: string[] = []
+
+  const flush = () => {
+    if (currentQuestion && currentAnswerLines.length) {
+      const answer = currentAnswerLines
+        .join('\n')
+        .replace(/`([^`]+)`/g, '$1')              // 行内代码去标记
+        .replace(/\*\*([^*]+)\*\*/g, '$1')        // 加粗
+        .replace(/\*([^*]+)\*/g, '$1')            // 斜体
+        .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')  // 链接
+        .replace(/^\s*[-*+]\s+/gm, '')            // 无序列表
+        .replace(/^\s*\d+\.\s+/gm, '')            // 有序列表
+        .replace(/^#+\s+/gm, '')                  // 多余标题
+        .replace(/\n{2,}/g, '\n')                 // 多余空行
+        .trim()
+      if (answer) faqs.push({ question: currentQuestion, answer })
+    }
+    currentAnswerLines = []
+  }
+
+  for (const line of faqSection) {
+    const m = line.match(h3Regex)
+    if (m) {
+      // 遇到新问题，先保存上一个
+      flush()
+      currentQuestion = m[1].trim()
+    } else {
+      currentAnswerLines.push(line)
+    }
+  }
+  flush()
+
+  return faqs
 }
 
 function parseFrontmatter(frontmatter: string): Record<string, any> {
