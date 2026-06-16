@@ -1,6 +1,8 @@
 // server/api/sitemap.xml.ts
 // 自动生成 sitemap.xml
+// 所有非文件类 URL 必须以斜杠结尾 - GitHub Pages + Fastly 默认会对无斜杠路径做 301 跳转
 import { readArticles } from '~/server/utils/markdown'
+import { withTrailingSlash } from '~/composables/usePageSeo'
 
 // 必须和 nuxt.config.ts 里的 BASE_URL + SITE_URL 保持一致
 // 站点使用自定义域名 apppss.com 部署在根路径
@@ -14,16 +16,16 @@ export default defineEventHandler((event) => {
   const articles = readArticles()
   const now = new Date().toISOString().split('T')[0]
 
-  // 静态路由
+  // 静态路由 - 末尾补斜杠
   const staticRoutes = [
-    { loc: `${FULL_SITE_URL}`, lastmod: now, changefreq: 'weekly', priority: '1.0' },
-    { loc: `${FULL_SITE_URL}writing`, lastmod: now, changefreq: 'weekly', priority: '0.9' },
-    { loc: `${FULL_SITE_URL}about`, lastmod: now, changefreq: 'monthly', priority: '0.7' },
+    { loc: withTrailingSlash(`${FULL_SITE_URL}`), lastmod: now, changefreq: 'weekly', priority: '1.0' },
+    { loc: withTrailingSlash(`${FULL_SITE_URL}writing`), lastmod: now, changefreq: 'weekly', priority: '0.9' },
+    { loc: withTrailingSlash(`${FULL_SITE_URL}about`), lastmod: now, changefreq: 'monthly', priority: '0.7' },
   ]
 
-  // 文章路由 - 优先用 modifiedAt(若有),否则用 date
+  // 文章路由 - 优先用 modifiedAt(若有),否则用 date - URL 末尾补斜杠
   const articleRoutes = articles.map(a => ({
-    loc: `${FULL_SITE_URL}writing/${a.id}`,
+    loc: withTrailingSlash(`${FULL_SITE_URL}writing/${a.id}`),
     lastmod: a.modifiedAt || a.date,
     changefreq: 'monthly',
     priority: '0.7',
@@ -44,3 +46,4 @@ ${allRoutes.map(r => `  <url>
 
   return xml
 })
+

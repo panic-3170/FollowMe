@@ -33,13 +33,13 @@ setResponseStatus(404)
           返回首页
         </NuxtLink>
         <NuxtLink
-          to="/writing"
+          to="/writing/"
           class="inline-block px-6 py-3 bg-white border border-gray-200 text-gray-900 rounded-full hover:bg-gray-50 transition-colors"
         >
           浏览文章
         </NuxtLink>
         <NuxtLink
-          to="/about"
+          to="/about/"
           class="inline-block px-6 py-3 bg-white border border-gray-200 text-gray-900 rounded-full hover:bg-gray-50 transition-colors"
         >
           关于我

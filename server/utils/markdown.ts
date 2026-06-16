@@ -34,10 +34,12 @@ export function readArticles(): Article[] {
     const content = readFileSync(filePath, 'utf-8')
     const parsed = parseMarkdown(content, file, stat.mtime)
 
+    const articleId = file.replace('.md', '')
     return {
       ...parsed,
-      id: file.replace('.md', ''),
-      _path: `/writing/${file.replace('.md', '')}`
+      id: articleId,
+      // 末尾加斜杠,避免 GitHub Pages + Fastly 301 跳转
+      _path: `/writing/${articleId}/`
     }
   }).sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
 }
@@ -51,7 +53,8 @@ export function readArticle(id: string): Article | null {
     return {
       ...parsed,
       id,
-      _path: `/writing/${id}`
+      // 末尾加斜杠,避免 301 跳转
+      _path: `/writing/${id}/`
     }
   } catch {
     return null

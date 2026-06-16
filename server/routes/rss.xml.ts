@@ -1,6 +1,8 @@
 // server/api/rss.xml.ts
 // 自动生成 RSS 2.0 feed
+// 所有非文件类 URL 必须以斜杠结尾 - 避免 301 跳转稀释链接权重
 import { readArticles } from '~/server/utils/markdown'
+import { withTrailingSlash } from '~/composables/usePageSeo'
 
 // 必须和 nuxt.config.ts 里的 BASE_URL + SITE_URL 保持一致
 const SITE_URL = 'https://apppss.com'
@@ -26,7 +28,7 @@ export default defineEventHandler((event) => {
   const latestDate = articles[0] ? new Date(articles[0].date).toUTCString() : buildDate
 
   const items = articles.map(a => {
-    const link = `${FULL_SITE_URL}writing/${a.id}`
+    const link = withTrailingSlash(`${FULL_SITE_URL}writing/${a.id}`)
     const pubDate = new Date(a.date).toUTCString()
     const categories = [a.category, ...(a.tags || [])]
       .filter(Boolean)

@@ -2,7 +2,9 @@
 // llms.txt 规范 (https://llmstxt.org/):
 //   一个根级 markdown 文件,告诉 LLM/AI 爬虫网站结构、核心内容
 //   nuxt generate 预渲染时会变成静态文件 /llms.txt
+// 所有非文件类 URL 必须以斜杠结尾
 import { readArticles } from '~/server/utils/markdown'
+import { withTrailingSlash } from '~/composables/usePageSeo'
 
 const SITE_URL = 'https://apppss.com'
 const BASE_URL = '/'
@@ -46,9 +48,9 @@ export default defineEventHandler((event) => {
   // --- 必选:核心入口 ---
   sectionBlocks.push(`## 核心入口
 
-- [首页 / 文章列表](${FULL_SITE_URL}): ${SITE_NAME} 的主页,包含最新文章与项目展示
-- [全部文章](${FULL_SITE_URL}writing): 所有已发布文章的索引页,支持分类与标签筛选
-- [关于我](${FULL_SITE_URL}about): 作者介绍、技能栈、联系方式与社交账号
+- [首页 / 文章列表](${withTrailingSlash(FULL_SITE_URL)}): ${SITE_NAME} 的主页,包含最新文章与项目展示
+- [全部文章](${withTrailingSlash(`${FULL_SITE_URL}writing`)}): 所有已发布文章的索引页,支持分类与标签筛选
+- [关于我](${withTrailingSlash(`${FULL_SITE_URL}about`)}): 作者介绍、技能栈、联系方式与社交账号
 `)
 
   // --- 必选:文章(按分类聚合) ---
@@ -58,7 +60,7 @@ export default defineEventHandler((event) => {
       .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
       .map(a => {
         const excerpt = a._excerpt ? `: ${a._excerpt.replace(/\n/g, ' ')}` : ''
-        return `- [${a.title}](${FULL_SITE_URL}writing/${a.id})${excerpt} (${a.date}, ${a.readTime})`
+        return `- [${a.title}](${withTrailingSlash(`${FULL_SITE_URL}writing/${a.id}`)})${excerpt} (${a.date}, ${a.readTime})`
       })
       .join('\n')
     sectionBlocks.push(`## ${title}\n\n${items}\n`)
@@ -90,3 +92,4 @@ ${sectionBlocks.join('\n')}
 
   return body
 })
+

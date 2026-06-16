@@ -20,7 +20,7 @@ usePageSeo({
   title: proj.name,
   description: `${proj.name} - ${proj.description}。${proj.fullDescription}`,
   type: 'article',
-  url: `${config.public.siteUrl}projects/${proj.id}`,
+  url: `${config.public.siteUrl}projects/${proj.id}/`,
   tags: proj.tags,
   jsonLd: {
     '@context': 'https://schema.org',
@@ -157,7 +157,7 @@ usePageSeo({
             <NuxtLink
               v-for="otherProject in projects.filter(p => p.id !== project.id).slice(0, 2)"
               :key="otherProject.id"
-              :to="`/projects/${otherProject.id}`"
+              :to="`/projects/${otherProject.id}/`"
               class="p-6 bg-white rounded-xl border border-gray-200 hover:shadow-lg transition-all duration-300 group"
             >
               <div class="flex items-center gap-4 mb-3">

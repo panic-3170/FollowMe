@@ -43,7 +43,8 @@ function smoothScrollTo(id: string) {
 
 const featuredArticles = articles
   .slice(0, 3)
-  .map(a => ({ ...a, _path: `/writing/${a.id}` }))
+  // 保留服务端传来的 _path(已带末尾斜杠,避免 301)
+  .map(a => ({ ...a, _path: a._path || `/writing/${a.id}/` }))
 
 // SEO 配置 - 首页
 usePageSeo({
@@ -156,7 +157,7 @@ usePageSeo({
           <NuxtLink
             v-for="project in projects"
             :key="project.id"
-            :to="`/projects/${project.id}`"
+            :to="`/projects/${project.id}/`"
             class="p-6 bg-white rounded-xl border border-gray-200 hover:shadow-lg transition-all duration-300 group cursor-pointer"
           >
             <div class="flex items-start justify-between mb-4">

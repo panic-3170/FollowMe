@@ -43,11 +43,12 @@ const relatedArticles = computed(() => {
   return articles
     .filter(a => a.category === article.value!.category && a.id !== id)
     .slice(0, 3)
-    .map(a => ({ ...a, _path: `/writing/${a.id}` }))
+    // 保留服务端传来的 _path(已带末尾斜杠)
+    .map(a => ({ ...a, _path: a._path || `/writing/${a.id}/` }))
 })
 
-// 分享 URL
-const fullUrl = computed(() => `${config.public.siteUrl}writing/${id}`)
+// 分享 URL - 末尾带斜杠,避免 GitHub Pages + Fastly 301 跳转
+const fullUrl = computed(() => `${config.public.siteUrl}writing/${id}/`)
 const shareText = computed(() => `${article.value?.title} | ${config.public.siteName}`)
 
 // 独立修改日期（frontmatter 显式指定 modifiedAt 才会有值）

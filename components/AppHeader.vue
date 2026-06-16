@@ -62,7 +62,7 @@ function smoothScrollTo(id: string) {
             <NuxtLink to="/#projects" class="hover:text-gray-900 transition-colors">
               项目
             </NuxtLink>
-            <NuxtLink to="/writing" class="hover:text-gray-900 transition-colors">
+            <NuxtLink to="/writing/" class="hover:text-gray-900 transition-colors">
               写作
             </NuxtLink>
           </template>
@@ -112,7 +112,7 @@ function smoothScrollTo(id: string) {
           <NuxtLink to="/#projects" class="block w-full text-left py-2 text-gray-600 hover:text-gray-900 transition-colors" @click="mobileMenuOpen = false">
             项目
           </NuxtLink>
-          <NuxtLink to="/writing" class="block w-full text-left py-2 text-gray-600 hover:text-gray-900 transition-colors" @click="mobileMenuOpen = false">
+          <NuxtLink to="/writing/" class="block w-full text-left py-2 text-gray-600 hover:text-gray-900 transition-colors" @click="mobileMenuOpen = false">
             写作
           </NuxtLink>
         </template>

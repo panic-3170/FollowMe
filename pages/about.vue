@@ -7,12 +7,12 @@ const config = useRuntimeConfig()
 usePageSeo({
   title: '关于我',
   description: '王叔走都是上坡，独立开发者 / 全栈工程师。专注 Vue 3、React Native、TypeScript 与独立产品，期货交易爱好者，分享 CF + xray + nginx 反 GFW 翻墙教程与技术写作。',
-  url: `${config.public.siteUrl}about`,
+  url: `${config.public.siteUrl}about/`,
   tags: ['关于我', '独立开发者', '全栈工程师', 'Vue 3', 'React Native', 'TypeScript', '期货交易'],
   jsonLd: {
     '@context': 'https://schema.org',
     '@type': 'AboutPage',
-    url: `${config.public.siteUrl}about`,
+    url: `${config.public.siteUrl}about/`,
     mainEntity: {
       '@type': 'Person',
       name: config.public.author,

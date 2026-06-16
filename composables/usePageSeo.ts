@@ -29,6 +29,25 @@ const DEFAULT_DESCRIPTION = '独立开发者 / 全栈工程师。专注 Vue 3、
 const DEFAULT_IMAGE = `${FULL_SITE_URL}og-default.png`
 const TWITTER_HANDLE = '@theruoshui3000'
 
+/**
+ * URL 规范化:为文件夹式路由补上末尾斜杠
+ * GitHub Pages + Fastly 默认会对无斜杠路径做 301 跳转到带斜杠版本
+ * 为了避免每次请求多一次重定向,以及让 Sitemap / RSS / llms.txt 与最终 URL 一致
+ * 规则:
+ *   - 空串 / 根路径 '/' 不动
+ *   - 已带斜杠 / 已带 query 或 hash 不动
+ *   - 文件类路径(.xml / .txt / .html / .json 等带扩展名)不动
+ *   - 其他路径补上末尾斜杠
+ */
+export function withTrailingSlash(url: string): string {
+  if (!url) return url
+  if (url === '/') return url
+  if (url.endsWith('/')) return url
+  if (/[?#]/.test(url)) return url
+  if (/\.[a-z0-9]+$/i.test(url)) return url
+  return url + '/'
+}
+
 export function usePageSeo(options: SeoOptions = {}) {
   const config = useRuntimeConfig()
   const route = useRoute()
@@ -38,7 +57,7 @@ export function usePageSeo(options: SeoOptions = {}) {
     description = DEFAULT_DESCRIPTION,
     image = DEFAULT_IMAGE,
     type = 'website',
-    url = `${FULL_SITE_URL}${route.path.replace(/^\//, '')}`,
+    url = withTrailingSlash(`${FULL_SITE_URL}${route.path.replace(/^\//, '')}`),
     publishedAt,
     modifiedAt,
     author = AUTHOR_NAME,
@@ -139,9 +158,12 @@ export function buildBreadcrumbJsonLd(items: { name: string; url: string }[]) {
       position: index + 1,
       name: item.name,
       // Schema.org 要求 item 必须是绝对 URL,直接传 '/xxx' 会被 Google 报"字段 id 中的网址无效"
-      item: item.url.startsWith('http')
-        ? item.url
-        : `${FULL_SITE_URL.replace(/\/$/, '')}${item.url}`,
+      // 统一加末尾斜杠,避免 301 跳转稀释链接权重
+      item: withTrailingSlash(
+        item.url.startsWith('http')
+          ? item.url
+          : `${FULL_SITE_URL.replace(/\/$/, '')}${item.url}`
+      ),
     })),
   }
 }
