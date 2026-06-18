@@ -25,7 +25,7 @@ const SITE_URL = 'https://apppss.com'
 const BASE_URL = '/'
 const FULL_SITE_URL = `${SITE_URL}${BASE_URL}`
 const AUTHOR_NAME = '王叔走都是上坡'
-const DEFAULT_DESCRIPTION = '独立开发者 / 全栈工程师。专注 Vue 3、React Native、TypeScript 与独立产品，分享期货交易心得、CF+xray+nginx 反 GFW 技术方案与个人成长经验。'
+const DEFAULT_DESCRIPTION = '独立开发者 / 全栈工程师。专注 Vue 3、TypeScript、React Native 与 AI 编程实战（Cursor、Claude Code），分享期货交易心得（趋势跟踪、止损、移动止损）与独立产品经验。'
 const DEFAULT_IMAGE = `${FULL_SITE_URL}og-default.png`
 const TWITTER_HANDLE = '@theruoshui3000'
 

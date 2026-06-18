@@ -1,7 +1,7 @@
 ---
 id: kan-da-zuo-xiao-futures-trading
 title: 期货「看大做小」趋势交易法：从前辈点拨到实操悟道的完整路径（日线 + 30分钟 + RSI 临界点入场）
-date: 2026-06-14
+date: 2026-06-18
 category: 交易心得
 readTime: 9 分钟
 tags:

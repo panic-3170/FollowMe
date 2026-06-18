@@ -154,8 +154,7 @@ function inferCategory(body: string, id: string): string {
         'nuxt', 'next', 'node', 'npm', 'pnpm', 'webpack', 'vite',
         // 网络/服务器
         'nginx', 'apache', 'docker', 'kubernetes', 'linux', 'ubuntu', 'centos',
-        'vps', 'ssh', 'ssl', 'tls', 'cdn', 'dns',
-        'xray', 'v2ray', 'clash', 'shadowsocks', 'trojan',
+        'vps', 'ssh', 'ssl', 'tls', 'cdn', 'dns', 'websocket',
         // 工具
         'git', 'github', 'vscode', 'cursor', 'claude',
         // 通用
@@ -186,8 +185,7 @@ function inferCategory(body: string, id: string): string {
     {
       category: '网络工具',
       keywords: [
-        '翻墙', '科学上网', '代理', 'vpn', 'gfw', '防火墙', '梯子', '机场',
-        'cloudflare', 'cf', '域名', '备案', 'dns', 'cdn'
+        'cloudflare', 'cf', '域名', '备案', 'dns', 'cdn', 'websocket', 'nginx', 'ssl'
       ]
     }
   ]

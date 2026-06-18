@@ -2,7 +2,7 @@
 // llms.txt 规范 (https://llmstxt.org/):
 //   一个根级 markdown 文件,告诉 LLM/AI 爬虫网站结构、核心内容
 //   nuxt generate 预渲染时会变成静态文件 /llms.txt
-// 所有非文件类 URL 必须以斜杠结尾
+  // 所有非文件类 URL 必须以斜杠结尾
 import { readArticles } from '~/server/utils/markdown'
 import { withTrailingSlash } from '~/composables/usePageSeo'
 
@@ -11,7 +11,7 @@ const BASE_URL = '/'
 const FULL_SITE_URL = `${SITE_URL}${BASE_URL}`
 const SITE_NAME = '王叔走都是上坡 · 独立开发者'
 const SITE_DESCRIPTION =
-  '独立开发者 / 全栈工程师。专注 Vue 3、React Native、TypeScript、Flutter、Nuxt 3 实战，分享期货趋势跟踪与移动止损策略、CF + xray + nginx 反 GFW 技术方案、程序员副业变现与个人成长方法论。'
+  '独立开发者 / 全栈工程师。专注 Vue 3、Flutter、AI编程、AI工具、TypeScript、Flutter,Script、Nuxt 3 实战，分享期货趋势跟踪与移动止损策略、CDN 加速与 WebSocket 后端架构、AI 编程实战、程序员副业变现与个人成长方法论。'
 const AUTHOR = '王叔走都是上坡'
 const SITE_LANG = 'zh-CN'
 

@@ -48,10 +48,10 @@ const featuredArticles = articles
 
 // SEO 配置 - 首页
 usePageSeo({
-  title: undefined, // 使用站点默认 title
-  description: '独立开发者 / 全栈工程师的个人主页。分享 Vue 3、React Native、TypeScript 技术经验，期货交易心得（止损、趋势跟踪、移动止损），CF + xray + nginx 反 GFW 翻墙教程，独立开发与创业经验。',
+  title: '独立开发者博客 - Vue 3、TypeScript、AI 编程与期货交易',
+  description: '独立开发者 / 全栈工程师的个人主页。分享 Vue 3、TypeScript、React Native 技术经验，AI 编程实战（Cursor、Claude Code），期货交易心得（止损、趋势跟踪、移动止损），独立开发与创业经验。',
   url: config.public.siteUrl,
-  tags: ['独立开发者', 'Vue 3', 'React Native', 'TypeScript', 'Flutter', 'Nuxt.js', '期货交易', '止损', '移动止损', '趋势跟踪', 'xray', 'VLESS', 'Cloudflare', 'GFW', '个人博客', '全栈工程师'],
+  tags: ['独立开发者', 'Vue 3', 'TypeScript', 'React Native', 'AI 编程', 'Cursor', 'Claude Code', 'Nuxt.js', '期货交易', '止损', '移动止损', '趋势跟踪', '个人博客', '全栈工程师', '技术写作', '独立产品'],
   jsonLd: {
     '@context': 'https://schema.org',
     '@type': 'ProfilePage',
@@ -62,11 +62,11 @@ usePageSeo({
       name: config.public.author,
       alternateName: '王叔',
       jobTitle: '独立开发者 / 全栈工程师',
-      description: '独立开发者，专注前端技术（Vue 3、React Native、TypeScript）与独立产品，分享期货交易心得与翻墙技术方案。',
+      description: '独立开发者，专注前端技术（Vue 3、TypeScript、React Native）与 AI 编程实战，分享期货交易心得与独立产品经验。',
       knowsAbout: [
-        'Vue 3', 'React Native', 'TypeScript', 'Flutter', 'Nuxt.js',
-        '期货交易', '趋势跟踪', '技术写作', '独立开发', '系统架构',
-        'xray 翻墙', 'Cloudflare CDN', 'GFW 绕过'
+        'Vue 3', 'TypeScript', 'React Native', 'Nuxt.js', 'AI 编程',
+        'Cursor', 'Claude Code', '期货交易', '趋势跟踪', '止损',
+        '技术写作', '独立开发', '独立产品', '系统架构',
       ],
     },
   },

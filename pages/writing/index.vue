@@ -37,9 +37,9 @@ const filteredArticles = computed(() => {
 // SEO 配置
 usePageSeo({
   title: '写作专栏',
-  description: '技术见解、产品思考、交易心得和创业经验。涵盖 Vue 3、React Native、TypeScript、期货交易、移动止损、xray 翻墙等热门话题。',
+  description: '技术见解、产品思考、交易心得和创业经验。涵盖 Vue 3、flutter、TypeScript、期货交易、移动止损、CDN 加速架构、WebSocket 后端、AI 编程等热门话题。',
   url: `${config.public.siteUrl}writing/`,
-  tags: ['技术博客', 'Vue 3', 'React Native', '期货交易', '独立开发', 'TypeScript'],
+  tags: ['技术博客', 'Vue 3', 'flutter', '期货交易', '独立开发', 'TypeScript'],
   jsonLd: {
     '@context': 'https://schema.org',
     '@type': 'Blog',

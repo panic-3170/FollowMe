@@ -6,9 +6,9 @@ const config = useRuntimeConfig()
 
 usePageSeo({
   title: '关于我',
-  description: '王叔走都是上坡，独立开发者 / 全栈工程师。专注 Vue 3、React Native、TypeScript 与独立产品，期货交易爱好者，分享 CF + xray + nginx 反 GFW 翻墙教程与技术写作。',
+  description: '王哪走都是上坡，独立开发者 / 全栈工程师。专注 Vue 3、flutter、TypeScript 与独立产品，期货交易爱好者，分享 CDN 加速、nginx 反向代理、Node.js WebSocket 后端架构与 AI 编程实战。',
   url: `${config.public.siteUrl}about/`,
-  tags: ['关于我', '独立开发者', '全栈工程师', 'Vue 3', 'React Native', 'TypeScript', '期货交易'],
+  tags: ['关于我', '独立开发者', '全栈工程师', 'ai编程', 'trae', 'codex', 'claude', 'Vue 3', 'Flutter', 'TypeScript', '期货交易'],
   jsonLd: {
     '@context': 'https://schema.org',
     '@type': 'AboutPage',
@@ -17,7 +17,7 @@ usePageSeo({
       '@type': 'Person',
       name: config.public.author,
       jobTitle: '独立开发者 / 全栈工程师',
-      description: '专注前端技术栈（Vue 3、React Native、TypeScript、Flutter、Nuxt.js）与独立产品。期货交易爱好者，关注趋势跟踪、止损策略与心态管理。',
+      description: '专注前端技术栈（Vue 3、Flutter、TypeScript、Nuxt.js）与独立产品。期货交易爱好者，关注趋势跟踪、止损策略与心态管理。',
       alumniOf: '全栈工程师',
       sameAs: [
         'https://github.com/panic-3170',
