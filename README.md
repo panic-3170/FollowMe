@@ -1,4 +1,4 @@
-# 王叔走都是上坡 · 独立开发者博客（FollowMe）
+# 王哪走都是上坡 · 独立开发者博客（FollowMe）
 
 > 一个面向中文开发者的**独立开发者技术博客**与个人主页：深耕 Python/ Golang / Flutter / TypeScript / Nuxt.js / Flutter 实战教程与 **AI 编程（Cursor / Claude Code）实战**，分享独立产品出海、远程开发与团队协作、期货趋势跟踪与移动止损策略、程序员副业变现与个人成长方法论。
 
