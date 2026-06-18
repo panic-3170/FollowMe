@@ -92,6 +92,12 @@ export default defineNuxtConfig({
         { rel: 'alternate', type: 'text/plain', title: 'LLM-friendly site index', href: `${FULL_SITE_URL}llms.txt` },
       ],
       script: [
+        // Google AdSense — 必须在 <head> 里 async 加载,广告才会展示
+        {
+          src: 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1750003824799412',
+          async: true,
+          crossorigin: 'anonymous',
+        },
         {
           type: 'application/ld+json',
           // 全站 Organization + Person Schema
