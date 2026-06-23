@@ -1,5 +1,5 @@
 import type { Component } from 'vue'
-import { AppWindow, Wifi, Globe, Monitor } from 'lucide-vue-next'
+import { AppWindow, Wifi, Globe, Wrench } from 'lucide-vue-next'
 
 export interface Project {
   id: string
@@ -65,7 +65,7 @@ export const projects: Project[] = [
       { category: '部署', items: ['GitHub Pages'] },
       { category: '分析', items: ['51.la', 'Google Analytics'] }
     ],
-    link: 'https://www.apppss.com',
+    link: 'https://panic-3170.github.io/TrendRadar/',
     github: 'https://github.com/panic-3170/TrendRadar'
   },
   {
@@ -95,5 +95,33 @@ export const projects: Project[] = [
     ],
     link: '#',
     github: 'https://github.com/panic-3170/wifi-transfer-assistant'
+  },
+  {
+    id: 'toolkit',
+    name: 'ToolKit · 在线工具箱',
+    icon: Wrench,
+    description: '浏览器端图片格式转换工具集，WebP/HEIC/SVG ↔ PNG/JPG，100% 本地处理，文件零上传',
+    tags: ['HTML5', 'Canvas API', 'WebAssembly', 'Client-side', '隐私优先'],
+    status: '已上线',
+    users: '公开访问',
+    fullDescription: 'ToolKit.run 是一个**纯浏览器端**的免费在线图片格式转换工具集，主打隐私优先：所有图像处理完全在用户浏览器内完成，文件永不离开本地设备，无需注册、无需登录、无任何追踪。已上线 WebP → PNG / WebP → JPG 两款核心工具，即将推出 HEIC → JPG（iPhone 照片转通用格式）与 SVG → PNG（矢量图栅格化）。',
+    features: [
+      'WebP → PNG：保留透明通道，转换为通用 PNG 格式，100% 本地解码',
+      'WebP → JPG：转换为带白底的 JPEG，体积更小、兼容性更强',
+      'HEIC → JPG（即将上线）：iPhone HEIC 照片一键转通用 JPEG，无需安装额外软件',
+      'SVG → PNG（即将上线）：矢量图任意分辨率栅格化，纯客户端渲染',
+      '零上传架构：所有处理在浏览器内完成，文件永不上传服务器',
+      '零注册零追踪：不需要账号、不收集邮箱、不写 Cookie',
+      '跨平台兼容：任何现代浏览器（Chrome / Edge / Safari / Firefox）即开即用',
+      '开源免费：源码开放，长期免费使用'
+    ],
+    techStack: [
+      { category: '前端', items: ['HTML5', 'CSS3', 'Vanilla JavaScript', 'Tailwind CSS'] },
+      { category: '图像处理', items: ['Canvas API', 'OffscreenCanvas', 'WebP 编解码', 'HEIC 解码（libheif-js）', 'SVG 栅格化'] },
+      { category: '性能', items: ['WebAssembly', 'Web Workers', 'Stream API'] },
+      { category: '部署', items: ['GitHub Pages', '自定义域名 kit.apppss.com', 'Cloudflare CDN'] }
+    ],
+    link: 'https://kit.apppss.com/',
+    github: 'https://github.com/panic-3170/webp2png'
   }
 ]
