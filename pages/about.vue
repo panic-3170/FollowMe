@@ -60,7 +60,7 @@ usePageSeo({
           </h2>
           <div class="prose prose-lg max-w-none text-gray-700 leading-relaxed space-y-4">
             <p>
-              你好，我是 <strong>王叔走都是上坡</strong>，一名独立开发者 / 全栈工程师。
+              你好，我是 <strong>{{ config.public.author }}</strong>，一名独立开发者 / 全栈工程师。
             </p>
             <p>
               从一线大厂辞职后开始独立开发之旅，专注于用技术解决真实问题。日常工作涉及前端、后端、移动端、DevOps 全链路。

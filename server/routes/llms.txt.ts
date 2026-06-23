@@ -9,10 +9,10 @@ import { withTrailingSlash } from '~/composables/usePageSeo'
 const SITE_URL = 'https://apppss.com'
 const BASE_URL = '/'
 const FULL_SITE_URL = `${SITE_URL}${BASE_URL}`
-const SITE_NAME = '王叔走都是上坡 · 独立开发者'
+const SITE_NAME = '王哪走都是上坡 · 独立开发者'
 const SITE_DESCRIPTION =
   '独立开发者 / 全栈工程师。专注 Vue 3、Flutter、AI编程、AI工具、TypeScript、Flutter,Script、Nuxt 3 实战，分享期货趋势跟踪与移动止损策略、CDN 加速与 WebSocket 后端架构、AI 编程实战、程序员副业变现与个人成长方法论。'
-const AUTHOR = '王叔走都是上坡'
+const AUTHOR = '王哪走都是上坡'
 const SITE_LANG = 'zh-CN'
 
 export default defineEventHandler((event) => {

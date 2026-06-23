@@ -43,7 +43,7 @@ usePageSeo({
   jsonLd: {
     '@context': 'https://schema.org',
     '@type': 'Blog',
-    name: '王叔走都是上坡的写作专栏',
+    name: `${config.public.author}的写作专栏`,
     url: `${config.public.siteUrl}writing/`,
     description: '技术见解、产品思考、交易心得和创业经验',
     author: { '@type': 'Person', name: config.public.author },

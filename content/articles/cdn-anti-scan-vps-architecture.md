@@ -1,7 +1,7 @@
 ---
 id: cdn-anti-scan-vps-architecture
 title: 海外 VPS 的 CDN 加速与网站防探测架构（Cloudflare + nginx 反代 + WebSocket 后端完整方案）
-date: 2026-06-15
+date: 2026-06-14
 category: 网络工具
 readTime: 10 分钟
 tags:

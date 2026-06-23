@@ -9,7 +9,7 @@
 
 ## 作者
 
-**王叔走都是上坡** — 独立开发者 / 全栈工程师 · 期货交易爱好者 · AI 编程实践者
+**王哪走都是上坡** — 独立开发者 / 全栈工程师 · 期货交易爱好者 · AI 编程实践者
 
 - 📧 [panic3170@gmail.com](mailto:panic3170@gmail.com)
 - 🐙 [@panic-3170](https://github.com/panic-3170)

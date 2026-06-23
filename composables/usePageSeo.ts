@@ -19,12 +19,12 @@ interface SeoOptions {
   noindex?: boolean
 }
 
-const SITE_NAME = '王叔走都是上坡 · 独立开发者'
+const SITE_NAME = '王哪走都是上坡 · 独立开发者'
 const SITE_URL = 'https://apppss.com'
 // 必须和 nuxt.config.ts 里的 BASE_URL 保持一致(都是 '/'),否则 og:url / canonical / 面包屑 会指向 /FollowMe/* 这条不存在的路径
 const BASE_URL = '/'
 const FULL_SITE_URL = `${SITE_URL}${BASE_URL}`
-const AUTHOR_NAME = '王叔走都是上坡'
+const AUTHOR_NAME = '王哪走都是上坡'
 const DEFAULT_DESCRIPTION = '独立开发者 / 全栈工程师。专注 Vue 3、TypeScript、React Native 与 AI 编程实战（Cursor、Claude Code），分享期货交易心得（趋势跟踪、止损、移动止损）与独立产品经验。'
 const DEFAULT_IMAGE = `${FULL_SITE_URL}og-default.png`
 const TWITTER_HANDLE = '@theruoshui3000'

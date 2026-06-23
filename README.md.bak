@@ -1,4 +1,4 @@
-# 王叔走都是上坡 · 独立开发者博客（FollowMe）
+# 王哪走都是上坡 · 独立开发者博客（FollowMe）
 
 > 一个面向中文开发者的**独立开发者技术博客**与个人主页：深耕 Vue 3 / React Native / TypeScript / Nuxt.js / Flutter 实战教程与 **AI 编程（Cursor / Claude Code）实战**，分享独立产品出海、跨境网络与远程开发方案、期货趋势跟踪与移动止损策略、程序员副业变现与个人成长方法论。
 
@@ -35,7 +35,7 @@
 
 ## 项目简介
 
-**FollowMe** 是独立开发者 **王叔走都是上坡** 的个人技术博客与作品集站点，专注于"用代码创造有价值的数字产品"。站点采用 **Nuxt 3 + Vue 3 + TypeScript + Tailwind CSS** 构建，**纯静态生成（SSG）** 后通过 **GitHub Pages + 自定义域名 `apppss.com`** 上线，无需服务器即可承载全文检索、RSS、Sitemap、llms.txt、Schema.org 结构化数据等一整套现代博客能力。
+**FollowMe** 是独立开发者 **王哪走都是上坡** 的个人技术博客与作品集站点，专注于"用代码创造有价值的数字产品"。站点采用 **Nuxt 3 + Vue 3 + TypeScript + Tailwind CSS** 构建，**纯静态生成（SSG）** 后通过 **GitHub Pages + 自定义域名 `apppss.com`** 上线，无需服务器即可承载全文检索、RSS、Sitemap、llms.txt、Schema.org 结构化数据等一整套现代博客能力。
 
 站点内容覆盖五大方向：
 
@@ -282,7 +282,7 @@ npm run preview
 
 ## 作者
 
-**王叔走都是上坡** — 独立开发者 / 全栈工程师 · 期货交易爱好者
+**王哪走都是上坡** — 独立开发者 / 全栈工程师 · 期货交易爱好者
 
 - 🎓 开封大学 · 计算机科学
 - 💼 10+ 年互联网开发经验，2023 年转型独立开发者

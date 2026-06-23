@@ -5,10 +5,10 @@ import tailwindcss from '@tailwindcss/vite'
 const BASE_URL = '/'
 const SITE_URL = 'https://apppss.com'
 const FULL_SITE_URL = `${SITE_URL}${BASE_URL}`
-const AUTHOR_NAME = '王叔走都是上坡'
-const SITE_NAME = '王叔走都是上坡 · 独立开发者'
-const SITE_DESCRIPTION = '独立开发者与全栈工程师的技术博客。深耕 Vue 3、React Native、TypeScript、Flutter、Nuxt.js 实战教程，分享独立产品出海经验、期货趋势跟踪与移动止损策略、程序员副业变现与个人成长方法论。'
-const SITE_KEYWORDS = '独立开发者,全栈工程师,独立开发,副业变现,程序员副业,远程工作,出海,独立产品,Vue 3 教程,Vue 3 组合式 API,Vue 3 最佳实践,React Native 性能优化,React Native 实战,TypeScript 教程,TypeScript 类型体操,Nuxt 3 教程,Nuxt 3 静态部署,Nuxt 3 GitHub Pages,Flutter 跨平台,Flutter 开发,期货交易,期货趋势跟踪,趋势跟踪策略,移动止损,止损技巧,程序化交易,教程,Cloudflare,VPS,Git 工作流,产品设计,个人成长,技术写作'
+const AUTHOR_NAME = '王哪走都是上坡'
+const SITE_NAME = '王哪走都是上坡 · 独立开发者'
+const SITE_DESCRIPTION = '独立开发者与全栈工程师的技术博客。深耕 Vue 3、TypeScript、Flutter、Nuxt.js、Python、Go 实战教程，分享独立产品出海经验、期货趋势跟踪与移动止损策略、程序员副业变现与个人成长方法论。'
+const SITE_KEYWORDS = '软件开发,小程序开发,全栈工程师,独立开发,副业变现,程序员副业,远程工作,出海,独立产品,Vue,Flutter 性能优化,Flutter 实战,TypeScript,Nuxt,Nuxt 3 静态部署,Nuxt 3 GitHub Pages,Flutter 跨平台,Flutter 开发,期货交易,期货趋势跟踪,趋势跟踪策略,移动止损,止损技巧,程序化交易,教程,Cloudflare,VPS,Git 工作流,产品设计,个人成长,技术写作'
 const AUTHOR_EMAIL = 'panic3170@gmail.com'
 const AUTHOR_GITHUB = 'https://github.com/panic-3170'
 const AUTHOR_TWITTER = 'https://x.com/theruoshui3000'
@@ -115,7 +115,7 @@ export default defineNuxtConfig({
                 `${SITE_URL}`,
               ],
               knowsAbout: [
-                'Vue 3', 'React Native', 'TypeScript', 'Flutter', 'Nuxt.js',
+                'Vue 3', 'Python', 'Go', 'TypeScript', 'Flutter', 'Nuxt.js',
                 '期货交易', '技术写作', '独立开发', '系统架构'
               ],
             },

@@ -8,8 +8,9 @@ import { withTrailingSlash } from '~/composables/usePageSeo'
 const SITE_URL = 'https://apppss.com'
 const BASE_URL = '/'
 const FULL_SITE_URL = `${SITE_URL}${BASE_URL}`
-const SITE_NAME = '王叔走都是上坡 · 独立开发者'
+const SITE_NAME = '王哪走都是上坡 · 独立开发者'
 const SITE_DESCRIPTION = '独立开发者 / 全栈工程师的博客。分享技术教程、交易心得与个人成长。'
+const AUTHOR = '王哪走都是上坡'
 
 function escapeXml(text: string): string {
   return text
@@ -40,7 +41,7 @@ export default defineEventHandler((event) => {
     <link>${link}</link>
     <guid isPermaLink="true">${link}</guid>
     <pubDate>${pubDate}</pubDate>
-    <author>panic3170@gmail.com (王叔走都是上坡)</author>
+    <author>panic3170@gmail.com (${AUTHOR})</author>
     <description><![CDATA[${a._excerpt || a.title}]]></description>
     <content:encoded><![CDATA[${a.content || ''}]]></content:encoded>
 ${categories}
@@ -61,9 +62,9 @@ ${categories}
     <pubDate>${latestDate}</pubDate>
     <ttl>60</ttl>
     <atom:link href="${FULL_SITE_URL}rss.xml" rel="self" type="application/rss+xml" />
-    <managingEditor>panic3170@gmail.com (王叔走都是上坡)</managingEditor>
-    <webMaster>panic3170@gmail.com (王叔走都是上坡)</webMaster>
-    <copyright>Copyright © ${new Date().getFullYear()} 王叔走都是上坡</copyright>
+    <managingEditor>panic3170@gmail.com (王哪走都是上坡)</managingEditor>
+    <webMaster>panic3170@gmail.com (王哪走都是上坡)</webMaster>
+    <copyright>Copyright © ${new Date().getFullYear()} ${AUTHOR}</copyright>
     <generator>Nuxt 3 + RSS</generator>
 ${items}
   </channel>
