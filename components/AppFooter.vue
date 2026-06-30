@@ -7,7 +7,7 @@ import { Github } from 'lucide-vue-next'
     <div class="max-w-7xl mx-auto">
       <div class="flex flex-col md:flex-row items-center justify-between gap-6">
         <div class="text-center md:text-left">
-          <div class="text-xl mb-2 font-medium">王哪走都是上坡</div>
+          <div class="text-xl mb-2 font-medium">陵下书生</div>
           <p class="text-sm text-gray-600">独立开发者 · 用代码创造价值</p>
         </div>
 
@@ -32,7 +32,7 @@ import { Github } from 'lucide-vue-next'
       <div class="border-t border-gray-200 my-6"></div>
 
       <div class="text-center text-sm text-gray-600">
-        © 2026 王哪走都是上坡. All rights reserved.
+        © 2026 陵下书生. All rights reserved.
       </div>
     </div>
   </footer>

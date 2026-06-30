@@ -60,7 +60,7 @@ usePageSeo({
     mainEntity: {
       '@type': 'Person',
       name: config.public.author,
-      alternateName: '王叔',
+      alternateName: '陵下书生',
       jobTitle: '独立开发者 / 全栈工程师',
       description: '独立开发者，专注前端技术（Vue 3、TypeScript、React Native）与 AI 编程实战，分享期货交易心得与独立产品经验。',
       knowsAbout: [
@@ -112,7 +112,7 @@ usePageSeo({
           <h2 class="text-3xl md:text-4xl mb-8 tracking-tight font-medium">关于我</h2>
           <div class="space-y-6 text-lg text-gray-600 leading-relaxed">
             <p>
-              你好，我是王叔。2015年毕业开封大学计算机科学专业，在郑州多家互联网公司担任前端、后端、全栈工程师等职务期间，积累了丰富的产品开发经验。
+              你好，我是陵下书生。2015年毕业开封大学计算机科学专业，在郑州多家互联网公司担任前端、后端、全栈工程师等职务期间，积累了丰富的产品开发经验。
             </p>
             <p>
               2023年，我决定转型为独立开发者，追求更大的创作自由。这三年来，我独立开发并上线了多款应用，涵盖移动端、桌面端和Web平台，累计服务多家中小企业和个人用户。

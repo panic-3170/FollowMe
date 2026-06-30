@@ -41,7 +41,7 @@ function smoothScrollTo(id: string) {
     <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
       <div class="flex items-center gap-8">
         <NuxtLink to="/" class="text-xl tracking-tight font-medium hover:text-gray-600 transition-colors">
-          王哪走都是上坡
+          陵下书生
         </NuxtLink>
         <div class="hidden md:flex items-center gap-6 text-sm text-gray-600">
           <template v-if="isHome">

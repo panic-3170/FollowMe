@@ -8,9 +8,9 @@ import { withTrailingSlash } from '~/composables/usePageSeo'
 const SITE_URL = 'https://apppss.com'
 const BASE_URL = '/'
 const FULL_SITE_URL = `${SITE_URL}${BASE_URL}`
-const SITE_NAME = '王哪走都是上坡 · 独立开发者'
+const SITE_NAME = '陵下书生 · 独立开发者'
 const SITE_DESCRIPTION = '独立开发者 / 全栈工程师的博客。分享技术教程、交易心得与个人成长。'
-const AUTHOR = '王哪走都是上坡'
+const AUTHOR = '陵下书生'
 
 function escapeXml(text: string): string {
   return text
@@ -62,8 +62,8 @@ ${categories}
     <pubDate>${latestDate}</pubDate>
     <ttl>60</ttl>
     <atom:link href="${FULL_SITE_URL}rss.xml" rel="self" type="application/rss+xml" />
-    <managingEditor>panic3170@gmail.com (王哪走都是上坡)</managingEditor>
-    <webMaster>panic3170@gmail.com (王哪走都是上坡)</webMaster>
+    <managingEditor>panic3170@gmail.com (陵下书生)</managingEditor>
+    <webMaster>panic3170@gmail.com (陵下书生)</webMaster>
     <copyright>Copyright © ${new Date().getFullYear()} ${AUTHOR}</copyright>
     <generator>Nuxt 3 + RSS</generator>
 ${items}

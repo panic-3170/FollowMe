@@ -6,7 +6,7 @@ const config = useRuntimeConfig()
 
 usePageSeo({
   title: '关于我',
-  description: '王哪走都是上坡，独立开发者 / 全栈工程师。专注 Vue 3、flutter、TypeScript 与独立产品，期货交易爱好者，分享 CDN 加速、nginx 反向代理、Node.js WebSocket 后端架构与 AI 编程实战。',
+  description: '陵下书生，独立开发者 / 全栈工程师。专注 Vue 3、flutter、TypeScript 与独立产品，期货交易爱好者，分享 CDN 加速、nginx 反向代理、Node.js WebSocket 后端架构与 AI 编程实战。',
   url: `${config.public.siteUrl}about/`,
   tags: ['关于我', '独立开发者', '全栈工程师', 'ai编程', 'trae', 'codex', 'claude', 'Vue 3', 'Flutter', 'TypeScript', '期货交易'],
   jsonLd: {
