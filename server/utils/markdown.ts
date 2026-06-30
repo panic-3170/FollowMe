@@ -209,15 +209,24 @@ function extractExcerpt(body: string): string {
   const paragraphs = body.split('\n\n')
   for (const p of paragraphs) {
     const trimmed = p.trim()
-    // 跳过空行、标题、引用、分割线、代码块
+    // 跳过空行、标题、引用、分割线、代码块、表格
     if (!trimmed) continue
     if (trimmed.startsWith('#')) continue
     if (trimmed.startsWith('>')) continue
     if (trimmed.startsWith('---')) continue
     if (trimmed.startsWith('```')) continue
     if (trimmed.startsWith('|')) continue
-    // 返回纯文本
-    return trimmed.replace(/[#*_>`]/g, '').replace(/\n/g, ' ').slice(0, 150)
+    // 跳过纯标签段(只有 **xxx**: 但实际内容在下一个段落)
+    // 例: "**3 分钟摘要**:", "**核心结论**:", "**缘起**:"
+    if (/^\*\*[^*]+\*\*[：:]\s*$/.test(trimmed)) continue
+    // 返回纯文本(去除 Markdown 符号)
+    return trimmed
+      .replace(/^[-*+]\s+/gm, '')     // 列表前缀
+      .replace(/[#*_>`]/g, '')         // 其他 Markdown 符号
+      .replace(/\n+/g, ' ')            // 多行合并
+      .replace(/\s+/g, ' ')            // 多空格合一
+      .trim()
+      .slice(0, 150)
   }
   return ''
 }
