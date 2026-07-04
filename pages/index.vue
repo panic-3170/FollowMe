@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue'
-import { ExternalLink, ArrowUp, Rss } from 'lucide-vue-next'
+import { ExternalLink, ArrowUp, Rss, ArrowRight, ChevronLeft, ChevronRight } from 'lucide-vue-next'
 import { projects } from '~/data/projects'
 import { usePageSeo } from '~/composables/usePageSeo'
 
@@ -45,6 +45,22 @@ const featuredArticles = articles
   .slice(0, 3)
   // 保留服务端传来的 _path(已带末尾斜杠,避免 301)
   .map(a => ({ ...a, _path: a._path || `/writing/${a.id}/` }))
+
+// --- 项目横向滑动控制(PC 左右按钮) ---
+const projectsScrollRef = ref<HTMLElement | null>(null)
+
+const scrollProjects = (direction: 'left' | 'right') => {
+  const el = projectsScrollRef.value
+  if (!el) return
+  // 取一张卡的真实宽度,再 + gap-6 的 24px,一次滚动正好一张卡
+  const firstCard = el.querySelector('.snap-start') as HTMLElement | null
+  const cardWidth = firstCard?.clientWidth ?? 320
+  const distance = cardWidth + 24
+  el.scrollBy({
+    left: direction === 'left' ? -distance : distance,
+    behavior: 'smooth',
+  })
+}
 
 // SEO 配置 - 首页
 usePageSeo({
@@ -153,45 +169,86 @@ usePageSeo({
           </p>
         </div>
 
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <NuxtLink
-            v-for="project in projects"
-            :key="project.id"
-            :to="`/projects/${project.id}/`"
-            class="p-6 bg-white rounded-xl border border-gray-200 hover:shadow-lg transition-all duration-300 group cursor-pointer"
+        <!-- 横向滑动项目列表:外层 relative 用于锚定按钮,内部 div 才是滚动容器 -->
+        <div class="relative -mx-6 px-6">
+          <!-- PC 端左右切换按钮:放在滚动容器外面(不被 overflow 裁剪),PC 一直显示,移动端隐藏 -->
+          <button
+            type="button"
+            class="hidden md:flex absolute left-2 top-1/2 -translate-y-1/2 z-10 w-12 h-12 items-center justify-center bg-white/90 backdrop-blur rounded-full shadow-lg border border-gray-200 hover:bg-white hover:scale-105 transition-all"
+            aria-label="向左滚动"
+            style="left:-50px"
+            @click="scrollProjects('left')"
           >
-            <div class="flex items-start justify-between mb-4">
-              <div class="p-3 bg-gray-900/5 rounded-xl">
-                <component :is="project.icon" class="w-6 h-6" />
-              </div>
-              <ExternalLink class="w-5 h-5 text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity" />
-            </div>
+            <ChevronLeft class="w-5 h-5 text-gray-900" />
+          </button>
+          <button
+            type="button"
+            class="hidden md:flex absolute right-2 top-1/2 -translate-y-1/2 z-10 w-12 h-12 items-center justify-center bg-white/90 backdrop-blur rounded-full shadow-lg border border-gray-200 hover:bg-white hover:scale-105 transition-all"
+            aria-label="向右滚动"
+             style="right:-50px"
+            @click="scrollProjects('right')"
+          >
+            <ChevronRight class="w-5 h-5 text-gray-900" />
+          </button>
 
-            <h3 class="text-2xl mb-2 font-medium">{{ project.name }}</h3>
-            <p class="text-gray-600 mb-4 leading-relaxed">
-              {{ project.description }}
-            </p>
-
-            <div class="flex flex-wrap gap-2 mb-4">
-              <span
-                v-for="(tag, i) in project.tags"
-                :key="i"
-                class="px-3 py-1 bg-gray-100 text-gray-700 text-sm rounded-full"
+          <div
+            ref="projectsScrollRef"
+            class="overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-hide"
+          >
+            <div class="flex gap-6">
+              <NuxtLink
+                v-for="project in projects.slice(0, 8)"
+                :key="project.id"
+                :to="`/projects/${project.id}/`"
+                class="snap-start shrink-0 w-72 md:w-80 p-6 bg-white rounded-xl border border-gray-200 hover:shadow-lg transition-all duration-300 group cursor-pointer"
               >
-                {{ tag }}
-              </span>
-            </div>
+                <div class="flex items-start justify-between mb-4">
+                  <div class="p-3 bg-gray-900/5 rounded-xl">
+                    <component :is="project.icon" class="w-6 h-6" />
+                  </div>
+                  <ExternalLink class="w-5 h-5 text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity" />
+                </div>
 
-            <div class="flex items-center justify-between text-sm">
-              <span class="text-gray-600">{{ project.users }}</span>
-              <span :class="[
-                'px-3 py-1 text-sm rounded-full',
-                project.status === '已上线' ? 'bg-gray-900 text-white' : 'bg-white border border-gray-200 text-gray-900'
-              ]">
-                {{ project.status }}
-              </span>
+                <h3 class="text-2xl mb-2 font-medium">{{ project.name }}</h3>
+                <p class="text-gray-600 mb-4 leading-relaxed">
+                  {{ project.description }}
+                </p>
+
+                <div class="flex flex-wrap gap-2 mb-4">
+                  <span
+                    v-for="(tag, i) in project.tags"
+                    :key="i"
+                    class="px-3 py-1 bg-gray-100 text-gray-700 text-sm rounded-full"
+                  >
+                    {{ tag }}
+                  </span>
+                </div>
+
+                <div class="flex items-center justify-between text-sm">
+                  <span class="text-gray-600">{{ project.users }}</span>
+                  <span :class="[
+                    'px-3 py-1 text-sm rounded-full',
+                    project.status === '已上线' ? 'bg-gray-900 text-white' : 'bg-white border border-gray-200 text-gray-900'
+                  ]">
+                    {{ project.status }}
+                  </span>
+                </div>
+              </NuxtLink>
+
+              <!-- 查看更多卡:仅当总项目数 > 8 时显示 -->
+              <NuxtLink
+                v-if="projects.length > 8"
+                to="/projects/"
+                class="snap-start shrink-0 w-72 md:w-80 p-6 bg-gray-50 rounded-xl border-2 border-dashed border-gray-300 hover:border-gray-900 hover:bg-white transition-all duration-300 group cursor-pointer flex flex-col items-center justify-center min-h-[280px]"
+              >
+                <div class="p-4 bg-white rounded-full mb-4 group-hover:scale-110 transition-transform">
+                  <ArrowRight class="w-6 h-6 text-gray-900" />
+                </div>
+                <h3 class="text-xl font-medium mb-2">查看更多</h3>
+                <p class="text-sm text-gray-500">全部 {{ projects.length }} 个项目</p>
+              </NuxtLink>
             </div>
-          </NuxtLink>
+          </div>
         </div>
       </div>
     </section>

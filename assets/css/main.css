@@ -24,3 +24,12 @@
 .delay-300 {
   animation-delay: 300ms;
 }
+
+/* 隐藏滚动条但保留滚动能力 — 用于首页项目横向滑动列表 */
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* IE/Edge */
+  scrollbar-width: none;      /* Firefox */
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;              /* Chrome/Safari */
+}

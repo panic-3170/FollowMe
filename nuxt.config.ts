@@ -161,6 +161,7 @@ export default defineNuxtConfig({
       routes: [
         '/',
         '/writing',
+        '/projects',
         '/about',
         '/404.html',
         '/sitemap.xml',
