@@ -26,6 +26,7 @@
 - [项目结构](#项目结构)
 - [本地开发](#本地开发)
 - [部署与 CI/CD](#部署与-cicd)
+- [发布与 Google 索引推送](#发布与-google-索引推送)
 - [SEO 优化](#seo-优化)
 - [作者](#作者)
 - [联系与订阅](#联系与订阅)
@@ -200,6 +201,10 @@ FollowMe/
 │   ├── AppHeader.vue
 │   ├── AppFooter.vue
 │   └── Breadcrumb.vue
+├── blogseo/                    # SEO 工具脚本(Google Indexing API 推送)
+│   ├── push.js                 # 增量推送脚本(自动从 sitemap 拉取)
+│   ├── state.json              # 推送状态(URL → lastmod 映射,自动生成)
+│   └── service-account.json    # Google Service Account 凭证(请勿提交)
 ├── composables/
 │   └── usePageSeo.ts           # 统一 SEO meta + JSON-LD 注入
 ├── content/
@@ -279,6 +284,122 @@ npm run preview
 5. **域名**：`public/CNAME` 配置自定义域名为 [`apppss.com`](https://apppss.com)
 
 > 📌 仓库默认是 GitHub Pages **project page**（仓库名 `FollowMe`），通过 `public/CNAME` 升级为 **custom domain + apex**（即 `https://apppss.com`，不出现 `/FollowMe/` 前缀）。
+
+---
+
+## 发布与 Google 索引推送
+
+> 一篇新文章从本地 Markdown 到被 Google 收录的完整链路：**写文 → 重新生成站点 → sitemap 自动同步 → 增量推送到 Google Indexing API**。
+
+### 1. 写新文章
+
+在 [`content/articles/`](content/articles) 下新建 Markdown,按照 [`content/TEMPLATE.md`](content/TEMPLATE.md) 的 frontmatter 格式(`id` / `title` / `date` / `category` / `readTime` / `tags` / `modifiedAt`) 填写,正文按 H2/H3 分级即可。
+
+> 📌 **`modifiedAt` 是增量推送的关键字段** — 当你修改老文章时,记得把 `modifiedAt` 更新为当天的 ISO 日期,后续推送脚本会自动识别为"修改过",再次强推给 Google。
+
+### 2. 重新生成站点(sitemap 自动同步)
+
+```bash
+# 本地预览
+npm run dev          # http://localhost:3000
+
+# 生成静态站点(自动产出最新 sitemap.xml)
+npm run generate
+```
+
+sitemap 由 [`server/routes/sitemap.xml.ts`](server/routes/sitemap.xml.ts) 在构建时根据 `content/articles/*.md` 动态生成,无需手动维护。新增 / 删除 / 修改文章后,只要重新 `generate` 一次,sitemap 就会刷新。
+
+部署后线上地址:
+
+- Sitemap: <https://apppss.com/sitemap.xml>
+- RSS: <https://apppss.com/rss.xml>
+- llms.txt: <https://apppss.com/llms.txt>
+
+### 3. 推送到 Google Indexing API
+
+`blogseo/push.js` 是一键推送脚本,核心特性:
+
+- ✅ **自动从 sitemap 拉取 URL** — 不再手写 URL 数组
+- ✅ **增量推送** — 用 sitemap 中的 `<lastmod>` 与本地 `state.json` 比对,只推送"新增"或"修改过"的 URL
+- ✅ **每条成功立即落盘** — 中途崩溃也不会重提已成功的 URL
+- ✅ **零配额浪费** — 200 次/天的 publish 配额全部留给真正变更的页面
+
+#### 前置准备
+
+1. 在 [Google Cloud Console](https://console.cloud.google.com/) 创建项目,启用 **Indexing API**
+2. 创建 Service Account 并下载 JSON 凭证,放到 [`blogseo/service-account.json`](blogseo/service-account.json)(**注意不要提交到 Git**)
+3. 在 [Search Console](https://search.google.com/search-console) 将该 Service Account 邮箱添加为站点所有者
+
+#### 常用命令
+
+```bash
+# 1) 默认增量推送(线上 sitemap,只推 /writing/ 文章)
+node blogseo/push.js
+
+# 2) 推本地预览(先 npm run dev 启动)
+node blogseo/push.js http://localhost:3000/sitemap.xml
+
+# 3) 强制全量重推(忽略本地状态,例如想重新激活一批老文章)
+node blogseo/push.js --force
+
+# 4) 不只推文章,把首页 / about 等静态页也一起推
+node blogseo/push.js --all
+
+# 5) 组合使用:本地预览 + 强制全量
+node blogseo/push.js http://localhost:3000/sitemap.xml --force --all
+```
+
+#### 输出示例
+
+```text
+正在使用 Google 官方原生机制解析凭证: .../blogseo/service-account.json
+🌐 正在拉取 Sitemap: https://apppss.com/sitemap.xml
+📋 从 Sitemap 解析到 12 个待评估 URL(仅文章)
+🆕 待推送: 2 个 | ⏭️  已跳过(未变更): 10 个
+✅ Google Auth 官方原生认证成功!加急通道已开启。
+正在向 Google 骨干网提交: https://apppss.com/writing/xxx/ (lastmod=2026-07-05) ...
+🚀 成功强推! 状态码: 200, 消息: OK
+📊 Google 登记详情: notifyTime=2026-07-05T...
+🏁 全部的特快加急工单已成功递交至 Google Indexer 核心队列!
+```
+
+#### 状态文件
+
+`blogseo/state.json` 由脚本自动维护,结构:
+
+```json
+{
+  "https://apppss.com/writing/xxx/": {
+    "lastmod": "2026-07-05",
+    "submittedAt": "2026-07-05T10:00:00.000Z",
+    "notifyTime": "2026-07-05T10:00:01.000Z"
+  }
+}
+```
+
+- 想清空重新全量推送一次?直接 `rm blogseo/state.json` 后再跑 `node blogseo/push.js`
+- 想看哪些 URL 已经被记录过?直接 `cat blogseo/state.json`
+
+### 4. 一条命令串联全流程
+
+发布新文章时,推荐的一气呵成流程:
+
+```bash
+# 1. 写完 / 修改完文章
+git add content/articles/
+
+# 2. 本地预览一遍
+npm run dev
+
+# 3. 没问题,提交并触发自动部署
+git commit -m "feat: 发布《xxx》"
+git push origin main    # GitHub Actions 自动 build + deploy
+
+# 4. 部署完成后(约 1-2 分钟),主动强推 Google 索引
+node blogseo/push.js
+```
+
+> 💡 **小贴士**:写新文章时,**同一天**写多篇不需要每篇都推送 — 等所有文章写完、一次性部署后,跑一次 `node blogseo/push.js`,脚本会自动挑出当天 `date` / `modifiedAt` 与 state 中不一致的 URL 一次性推送,既省事又不浪费配额。
 
 ---
 
