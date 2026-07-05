@@ -397,6 +397,10 @@ git push origin main    # GitHub Actions 自动 build + deploy
 
 # 4. 部署完成后(约 1-2 分钟),主动强推 Google 索引
 node blogseo/push.js
+
+# 5. 如果访问google超时，请设置代理
+$env:HTTP_PROXY="http://127.0.0.1:10808"
+$env:HTTPS_PROXY="http://127.0.0.1:10808"  
 ```
 
 > 💡 **小贴士**:写新文章时,**同一天**写多篇不需要每篇都推送 — 等所有文章写完、一次性部署后,跑一次 `node blogseo/push.js`,脚本会自动挑出当天 `date` / `modifiedAt` 与 state 中不一致的 URL 一次性推送,既省事又不浪费配额。
