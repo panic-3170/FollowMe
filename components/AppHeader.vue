@@ -54,6 +54,9 @@ function smoothScrollTo(id: string) {
             <button @click="smoothScrollTo('writing')" class="hover:text-gray-900 transition-colors">
               写作
             </button>
+            <NuxtLink to="/contact/" class="hover:text-gray-900 transition-colors">
+              联系
+            </NuxtLink>
           </template>
           <template v-else>
             <NuxtLink to="/#about" class="hover:text-gray-900 transition-colors">
@@ -64,6 +67,9 @@ function smoothScrollTo(id: string) {
             </NuxtLink>
             <NuxtLink to="/writing/" class="hover:text-gray-900 transition-colors">
               写作
+            </NuxtLink>
+            <NuxtLink to="/contact/" class="hover:text-gray-900 transition-colors">
+              联系
             </NuxtLink>
           </template>
         </div>
@@ -104,6 +110,9 @@ function smoothScrollTo(id: string) {
           <button @click="smoothScrollTo('writing')" class="block w-full text-left py-2 text-gray-600 hover:text-gray-900 transition-colors">
             写作
           </button>
+          <NuxtLink to="/contact/" class="block w-full text-left py-2 text-gray-600 hover:text-gray-900 transition-colors" @click="mobileMenuOpen = false">
+            联系
+          </NuxtLink>
         </template>
         <template v-else>
           <NuxtLink to="/#about" class="block w-full text-left py-2 text-gray-600 hover:text-gray-900 transition-colors" @click="mobileMenuOpen = false">
@@ -114,6 +123,9 @@ function smoothScrollTo(id: string) {
           </NuxtLink>
           <NuxtLink to="/writing/" class="block w-full text-left py-2 text-gray-600 hover:text-gray-900 transition-colors" @click="mobileMenuOpen = false">
             写作
+          </NuxtLink>
+          <NuxtLink to="/contact/" class="block w-full text-left py-2 text-gray-600 hover:text-gray-900 transition-colors" @click="mobileMenuOpen = false">
+            联系
           </NuxtLink>
         </template>
         <div class="border-t border-gray-200 pt-4">

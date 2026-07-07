@@ -111,12 +111,12 @@ usePageSeo({
             >
               查看项目
             </button>
-            <button
-              @click="() => window.location.href = 'mailto:hello@example.com'"
-              class="px-8 py-3 bg-white border border-gray-200 text-gray-900 rounded-full hover:bg-gray-50 transition-colors w-full sm:w-auto font-medium"
+            <NuxtLink
+              to="/contact/"
+              class="px-8 py-3 bg-white border border-gray-200 text-gray-900 rounded-full hover:bg-gray-50 transition-colors w-full sm:w-auto font-medium inline-flex items-center justify-center"
             >
               联系我
-            </button>
+            </NuxtLink>
           </div>
         </div>
       </div>

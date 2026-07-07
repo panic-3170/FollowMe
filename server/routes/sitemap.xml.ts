@@ -21,6 +21,7 @@ export default defineEventHandler((event) => {
     { loc: withTrailingSlash(`${FULL_SITE_URL}`), lastmod: now, changefreq: 'weekly', priority: '1.0' },
     { loc: withTrailingSlash(`${FULL_SITE_URL}writing`), lastmod: now, changefreq: 'weekly', priority: '0.9' },
     { loc: withTrailingSlash(`${FULL_SITE_URL}about`), lastmod: now, changefreq: 'monthly', priority: '0.7' },
+    { loc: withTrailingSlash(`${FULL_SITE_URL}contact`), lastmod: now, changefreq: 'monthly', priority: '0.7' },
   ]
 
   // 文章路由 - 优先用 modifiedAt(若有),否则用 date - URL 末尾补斜杠

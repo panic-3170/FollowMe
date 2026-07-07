@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ArrowLeft, Mail, Github, Twitter, Globe, Briefcase, Code2, TrendingUp } from 'lucide-vue-next'
+import { ArrowLeft, Mail, Briefcase, Code2, ArrowRight } from 'lucide-vue-next'
 import { usePageSeo } from '~/composables/usePageSeo'
 
 const config = useRuntimeConfig()
@@ -126,56 +126,15 @@ usePageSeo({
             联系我
           </h2>
           <p class="text-gray-700 mb-6">
-            欢迎通过以下方式与我交流技术、交易或合作机会：
+            欢迎通过以下方式与我交流技术、交易或合作机会。所有社交账号、品牌店铺、邮箱均汇总在联系页。
           </p>
-          <div class="grid sm:grid-cols-2 gap-4">
-            <a
-              href="mailto:panic3170@gmail.com"
-              class="flex items-center gap-3 p-4 bg-white rounded-xl border border-gray-200 hover:shadow-md transition-all"
-            >
-              <Mail class="w-5 h-5 text-gray-600" />
-              <div>
-                <div class="font-medium">邮箱</div>
-                <div class="text-sm text-gray-500">panic3170@gmail.com</div>
-              </div>
-            </a>
-            <a
-              href="https://github.com/panic-3170"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="flex items-center gap-3 p-4 bg-white rounded-xl border border-gray-200 hover:shadow-md transition-all"
-            >
-              <Github class="w-5 h-5 text-gray-600" />
-              <div>
-                <div class="font-medium">GitHub</div>
-                <div class="text-sm text-gray-500">@panic-3170</div>
-              </div>
-            </a>
-            <a
-              href="https://x.com/theruoshui3000"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="flex items-center gap-3 p-4 bg-white rounded-xl border border-gray-200 hover:shadow-md transition-all"
-            >
-              <Twitter class="w-5 h-5 text-gray-600" />
-              <div>
-                <div class="font-medium">X (Twitter)</div>
-                <div class="text-sm text-gray-500">@theruoshui3000</div>
-              </div>
-            </a>
-            <a
-              href="/rss.xml"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="flex items-center gap-3 p-4 bg-white rounded-xl border border-gray-200 hover:shadow-md transition-all"
-            >
-              <Globe class="w-5 h-5 text-gray-600" />
-              <div>
-                <div class="font-medium">RSS 订阅</div>
-                <div class="text-sm text-gray-500">第一时间获取更新</div>
-              </div>
-            </a>
-          </div>
+          <NuxtLink
+            to="/contact/"
+            class="inline-flex items-center gap-2 px-6 py-3 bg-gray-900 text-white rounded-full hover:bg-gray-800 transition-colors font-medium"
+          >
+            前往联系页
+            <ArrowRight class="w-4 h-4" />
+          </NuxtLink>
         </section>
       </article>
     </div>
