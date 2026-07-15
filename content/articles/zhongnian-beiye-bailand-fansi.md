@@ -1,7 +1,7 @@
 ---
 id: zhongnian-beiye-bailand-fansi
 title: 失业 4 年、每天只想摆烂：一个 40 岁中年男人的复盘与自救
-date: 2026-06-18
+date: 2026-07-15
 category: 创业人生
 readTime: 11 分钟
 tags:
