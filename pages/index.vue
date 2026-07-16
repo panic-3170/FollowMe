@@ -62,12 +62,23 @@ const scrollProjects = (direction: 'left' | 'right') => {
   })
 }
 
-// SEO 配置 - 首页
+// SEO 配置 - 首页（2026 热门关键词优化：Claude Code / Cursor / Vibe Coding / 跨境电商 / 独立站 / AI 量化）
 usePageSeo({
-  title: '独立开发者博客 - Vue 3、TypeScript、AI 编程与期货交易',
-  description: '独立开发者 / 全栈工程师的个人主页。分享 Vue 3、TypeScript、React Native 技术经验，AI 编程实战（Cursor、Claude Code），期货交易心得（止损、趋势跟踪、移动止损），独立开发与创业经验。',
+  title: '陵下书生 -- 独立开发者博客 / Claude Code / Cursor AI 编程、Nuxt 3 跨境电商独立站、AI 期货量化实战',
+  description: '独立开发者 / 全栈工程师。专注 Claude Code / Cursor / Windsurf AI 编程实战、Nuxt 3 + TypeScript 全栈开发、跨境电商独立站搭建、微型 SaaS 副业变现、AI 期货量化与趋势跟踪风控策略。',
   url: config.public.siteUrl,
-  tags: ['独立开发者', 'Vue 3', 'TypeScript', 'React Native', 'AI 编程', 'Cursor', 'Claude Code', 'Nuxt.js', '期货交易', '止损', '移动止损', '趋势跟踪', '个人博客', '全栈工程师', '技术写作', '独立产品'],
+  tags: [
+    // 身份
+    '独立开发者', '全栈工程师', 'Indie Hacker', '个人博客', '技术写作',
+    // AI 编程（2026 爆款）
+    'AI 编程', 'Claude Code', 'Cursor', 'Windsurf', 'Vibe Coding', 'AI Agent', 'MCP',
+    // 前端技术（聚焦 Nuxt 3 生态）
+    'Nuxt.js', 'TypeScript', 'Tailwind CSS', 'Pinia', 'Flutter',
+    // 副业 / 跨境电商
+    '微型 SaaS', '副业', '独立产品', '跨境电商', '独立站', '出海',
+    // 期货交易
+    '期货交易', 'AI 量化', '趋势跟踪', '移动止损', '动态风控',
+  ],
   jsonLd: {
     '@context': 'https://schema.org',
     '@type': 'ProfilePage',
@@ -78,11 +89,19 @@ usePageSeo({
       name: config.public.author,
       alternateName: '陵下书生',
       jobTitle: '独立开发者 / 全栈工程师',
-      description: '独立开发者，专注前端技术（Vue 3、TypeScript、React Native）与 AI 编程实战，分享期货交易心得与独立产品经验。',
+      description: '独立开发者，专注 Claude Code / Cursor AI 编程、Nuxt 3 全栈开发与跨境电商独立站搭建，分享 AI 期货量化与趋势跟踪实战。',
       knowsAbout: [
-        'Vue 3', 'TypeScript', 'React Native', 'Nuxt.js', 'AI 编程',
-        'Cursor', 'Claude Code', '期货交易', '趋势跟踪', '止损',
-        '技术写作', '独立开发', '独立产品', '系统架构',
+        // AI 编程（2026 热门）
+        'AI 编程', 'Claude Code', 'Cursor', 'Windsurf', 'Vibe Coding', 'AI Agent', 'MCP', 'GitHub Copilot',
+        // 前端技术（聚焦 Nuxt 3 生态）
+        'Nuxt 3', 'TypeScript', 'Tailwind CSS', 'Pinia', 'Vite', 'Next.js', 'Flutter',
+        // 独立开发 / 副业 / 跨境电商
+        '独立开发', '独立产品', '微型 SaaS', '副业变现', 'Indie Hacker', 'Solopreneur',
+        '跨境电商', '独立站', '出海',
+        // 期货交易
+        '期货交易', 'AI 量化', '量化交易', '趋势跟踪', '移动止损', '动态风控', 'CTA 策略',
+        // 其他
+        '技术写作', '系统架构',
       ],
     },
   },
@@ -95,14 +114,14 @@ usePageSeo({
       <div class="max-w-7xl mx-auto">
         <div class="max-w-3xl">
           <div class="inline-block px-4 py-1.5 bg-gray-900/5 rounded-full mb-6 animate-in">
-            <span class="text-sm text-gray-600">独立开发者 / 全栈工程师</span>
+            <span class="text-sm text-gray-600">独立开发者 · AI 编程 / 跨境电商 / 写作</span>
           </div>
           <h1 class="text-4xl md:text-6xl mb-6 tracking-tight font-medium animate-in delay-100">
-            创造有价值的<br />数字产品
+            一人 + AI，<br />做出能赚钱的产品
           </h1>
           <p class="text-lg md:text-xl text-gray-600 leading-relaxed mb-8 animate-in delay-200">
-            专注于构建优雅、高效的应用程序。从概念到实现，<br class="hidden md:block" />
-            用代码将想法变为现实，为用户创造卓越体验。
+            Claude Code + Cursor + Codex 提效 10 倍，Nuxt 3 + Flutter 做产品开发，<br class="hidden md:block" />
+            AI 跑期货量化策略——把代码、副业、复利放进同一个公式里。
           </p>
           <div class="flex flex-col sm:flex-row items-center gap-4 animate-in delay-300">
             <button
